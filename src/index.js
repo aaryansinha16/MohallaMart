@@ -7,6 +7,7 @@ const CartRouter = require("./cart/cart.router")
 const WishlistRouter = require('./wishlist/wishlist.router')
 const OrderRouter = require("./orders/orders.router")
 const SellerRouter = require('./seller/seller.router')
+const ReviewRouter = require('./reviews/reviews.router')
 
 const app = express()
 app.use(express.json())
@@ -22,6 +23,7 @@ app.use("/cart", CartRouter)
 app.use("/wishlist", WishlistRouter)
 app.use("/orders", OrderRouter)
 app.use("/seller", SellerRouter)
+app.use("/reviews", ReviewRouter)
 
 app.listen(3000, async () => {
     await dbConnect()
