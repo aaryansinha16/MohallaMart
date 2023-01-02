@@ -1,6 +1,7 @@
 const express = require('express')
 const orderModel = require('./orders.model')
 const userModel = require("../user/user.model")
+const cartModel = require('../cart/cart.model')
 const app = express.Router()
 
 //? GET all the ordred items of the particular user
@@ -22,20 +23,16 @@ app.get("/", async(req, res) => {
 
 //? POST a new order for a particular User
 app.post("/new-order", async(req,res) => {
-    let {userId, productId, totalCost} = req.body
+    let {userId, totalCost} = req.body
 
     try{
-        let checkItem = await orderModel.findOne({userId, productId})
-        if(!checkItem){
-            await orderModel.create({userId, productId, totalCost})
-            return res.send({
-                message: "Order successfull"
-            })
-        }else{
-            return res.send({
-                message: "This order has already been processed"
-            })
-        }
+        let cart = await cartModel.find({userId: userId}, {_id: 0})
+        await orderModel.insertMany(cart)
+        await cartModel.deleteMany({userId})
+        return res.send({
+            message: "Order successful",
+            totalCost: totalCost
+        })
     }catch(e){
         return res.status(500).send({
             message: e.message

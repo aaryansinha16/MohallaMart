@@ -65,7 +65,8 @@ app.post("/create-product", async(req, res) => {
         let product = await productModel.create(req.body)
         return res.send({
             message: "Created product successfully",
-            prod: product
+            prod: product,
+            seller: user
         })
     }catch(e){
         return res.status(403).send({
