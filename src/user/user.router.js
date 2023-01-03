@@ -24,7 +24,7 @@ app.get('/', async(req, res) => {
 })
 
 app.post('/signup', async(req, res) => {
-    let {username, email, password} = req.body
+    let {fName, lName, username, email, password} = req.body
     let user = await userModel.find({email})
     
     if(user.length != 0){
@@ -49,11 +49,11 @@ app.post('/signup', async(req, res) => {
 app.post('/login', async(req, res) => {
     let {email, password} = req.body
 
-    let user = await userModel.findOne({email})
+    let user = await userModel.findOne({email: email})
     if(!user){
         return res.status(403).send({
             message: "Email doesn't exist's in our record",
-            discription: "Either create an account using the same email OR login using other email"
+            description: "Either create an account using the same email OR login using other email"
         })
     }
 
