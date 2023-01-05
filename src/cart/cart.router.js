@@ -61,16 +61,16 @@ app.patch("/quantity", async(req, res) => {
 
 //? DELETE the cart item for the particular User
 app.delete("/remove-cart", async(req, res) => {
-    let {userId, productId} = req.headers
-
+    let {userid, productid} = req.headers
+    // console.log(req.headers)
     try{
-        let item = await cartModel.deleteOne({userId, productId})
+        let item = await cartModel.deleteOne({userId : userid, productId: productid})
         if(!item){
             return res.status(403).send({
                 message: "Something went wronge while removing item"
             })
         }
-
+        // console.log('CART', userId, productId, item)
         return res.send({
             message: "Item removed successfully"
         })

@@ -9,7 +9,7 @@ app.get("/", async(req, res) => {
     let {userId} = req.query
     
     try{
-        let orderItems = await orderModel.find({userId: userId}).populate("productId")
+        let orderItems = await orderModel.findOne({userId}).populate('products.productId')
         return res.send({
             message: "Orders fetch successfull",
             items: orderItems
@@ -23,15 +23,15 @@ app.get("/", async(req, res) => {
 
 //? POST a new order for a particular User
 app.post("/new-order", async(req,res) => {
-    let {userId, totalCost} = req.body
+    let {userId, totalCost, products} = req.body
 
     try{
-        let cart = await cartModel.find({userId: userId}, {_id: 0})
-        await orderModel.insertMany(cart)
+        let order = await orderModel.create(req.body)
         await cartModel.deleteMany({userId})
         return res.send({
             message: "Order successful",
-            totalCost: totalCost
+            totalCost: totalCost,
+            order: order
         })
     }catch(e){
         return res.status(500).send({
@@ -43,7 +43,7 @@ app.post("/new-order", async(req,res) => {
 //? GET All orders 
 //!(Only for Admin)
 app.get("/all-orders", async(req, res) => {
-    let {userId} = req.body
+    let {userId} = req.query
     let user = await userModel.findById(userId)
     if(!user) return res.status(404).send("User not found")
     if(user.role != "Admin"){
@@ -52,10 +52,14 @@ app.get("/all-orders", async(req, res) => {
         })
     }
     try{
-        let data = await orderModel.find({}).populate("productId")
+        let data = await orderModel.find({}).populate('products.productId')
+        let arr = []
+        for(var i = 0; i<data.length; i++){
+            arr.push(...data[i].products)
+        }
         return res.send({
             message: "Fetched all orders successfully",
-            orders: data
+            orders: arr
         })
     }catch(e){
         return res.status(500).send({

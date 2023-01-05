@@ -1,10 +1,14 @@
 const { Schema, model, default: mongoose } = require("mongoose");
 
+const singleProductObjectSchema = new Schema({
+    productId : {type: mongoose.Types.ObjectId, ref: 'product'},
+    quantity : {type: Number}
+})
 const orderSchema = new Schema({
     userId: {type: mongoose.Schema.Types.ObjectId, ref: "user"}, 
-    productId: {type: mongoose.Schema.Types.ObjectId, ref: "product"},
-    quantity: {type: Number},
+    products: [singleProductObjectSchema],
     totalCost: {type: Number}
 })
+
 
 module.exports = model('order', orderSchema)
