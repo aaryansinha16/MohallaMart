@@ -44,10 +44,10 @@ app.post("/new-item", async(req,res) => {
 
 //? PATCH for updating the quantity of the products added in the cart
 app.patch("/quantity", async(req, res) => {
-    let {qty, userId, productId} = req.body
+    let {quantity, userId, productId} = req.body
 
     try{
-        await cartModel.findOneAndUpdate({userId, productId}, {$inc : {"quantity": qty}})
+        await cartModel.findOneAndUpdate({userId, productId}, {$inc : {"quantity": quantity}})
         return res.send({
             message: "Quantity updated"
         })

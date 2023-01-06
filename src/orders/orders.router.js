@@ -23,7 +23,7 @@ app.get("/", async(req, res) => {
 
 //? POST a new order for a particular User
 app.post("/new-order", async(req,res) => {
-    let {userId, totalCost, products} = req.body
+    let {userId, totalCost, products, orderId} = req.body
 
     try{
         let order = await orderModel.create(req.body)

@@ -7,7 +7,8 @@ const singleProductObjectSchema = new Schema({
 const orderSchema = new Schema({
     userId: {type: mongoose.Schema.Types.ObjectId, ref: "user"}, 
     products: [singleProductObjectSchema],
-    totalCost: {type: Number}
+    totalCost: {type: Number},
+    orderId: {type: String}
 })
 
 
