@@ -190,3 +190,75 @@ body::-webkit-scrollbar-thumb {
 .test{
   cursor:default;
 }
+
+/* ! SWIPER CSS */
+.swiper {
+  width: 100%;
+  margin: auto;
+  padding-top: 50px !important;
+  padding-bottom:40px !important;
+}
+
+.swiper-slide {
+  background-position: center !important;
+  background-size: cover !important;
+  /* width: 500px !important; */
+  /* height: 900px; */
+  /* border: 10px solid yellow; */
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+}
+/* change the size of the bullet and active color */
+
+.swiper-pagination-bullet {
+  background-color: #095146 !important;
+  display: inline-block !important;
+  width: 15px !important;
+  height: 15px !important;
+  position: relative;
+  top: 10px !important;
+  border-radius: 5px !important;
+  margin-right: 20px !important;
+}
+
+/* change color of next 2 bullets in sequence to white*/
+
+.swiper-pagination-bullet-active,
+.swiper-pagination-bullet-active-next-next {
+  background-color: yellow !important;
+}
+
+/* change color of previous bullet to white*/
+
+.swiper-pagination-bullet-active-prev {
+  background-color: white;
+}
+
+.left{
+  transform: rotate(-180deg);
+  /* left:40px; */
+}
+.right{
+  right: -10px;
+}
+
+.left, .right{
+  top:45px;
+  position: relative;
+  height: 60px;
+  width: 60px;
+  transition: .1s linear;
+  cursor: pointer;
+}
+
+.right:hover{
+  transform: scale(1.2);
+}
+.left:hover{
+  transform: rotate(-180deg) scale(1.2);
+}
+
+

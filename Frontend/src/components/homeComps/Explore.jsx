@@ -3,6 +3,7 @@ import React from 'react'
 import Downarrow from '../../Resources/downarrow.svg'
 import Dorito from '../../Resources/dorito.png'
 import {Navigate, useNavigate, Link} from 'react-router-dom'
+import ExploreSwiper from './ExploreSwiper'
 
 const Explore = () => {
     const navigate = useNavigate()
@@ -33,7 +34,6 @@ const Explore = () => {
                 transform: 'rotate(45deg) scale(1.2)',
                 cursor:'pointer'
             }}
-            // onClick={handleScroll}
             // borderLeft='60px solid transparent'
             // borderRight= '60px solid transparent'
             // borderTop='60px solid #0caf96'
@@ -88,6 +88,21 @@ const Explore = () => {
             <Image className='productImg' src={Dorito} w='33%' h={{base:'150px',md:'350px' ,lg:'400px',xl:'500px'}}/>
         </Flex>
             <Box w='100%' bg='#00957b' h={{base:'30px',md:'70px'}} position='relative' top={{base:'-30px', md:'-70px'}}></Box>
+
+
+        <Text
+            color='white'
+            fontSize={{base:'44px', md:'54px'}}
+            textShadow= "-7px 5px 0 #0e8c78"
+            fontFamily='Modak'
+            lineHeight='60px'
+            w={{base:'100%', sm:'90%', md:'40%'}}
+            textAlign='center'
+            m='auto'
+        >
+            TREND OF THE DAY!
+        </Text>    
+        <ExploreSwiper />
 
     </Box>
   )

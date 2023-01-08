@@ -21,7 +21,7 @@ const AllRoutes = () => {
           <>
           {/* <Navbar /> */}
             <Home />
-          {/* <Footer /> */}
+          <Footer />
           </>
         } />
         <Route path='/products' element={
