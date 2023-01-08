@@ -65,8 +65,8 @@ export default function Navbar({props={}, handleSearch}){
         })
     }
     return(
-        <HStack w='95%' m='auto' position='sticky' top='0%' zIndex='1000' alignItems="center" justify='space-between' py={3} px={6} borderRadius='3xl'
-        bgColor='rgba(255, 255, 255, .40)' style={{backdropFilter: 'blur(7px)'}} boxShadow='xl'>
+        <HStack w='95%' color='white' m='auto' position='sticky' top='7px' zIndex='1000' alignItems="center" justify='space-between' py={3} px={6} borderRadius='3xl'
+        bgColor='rgba(255, 255, 255, .20)' style={{backdropFilter: 'blur(7px)'}} boxShadow='xl'>
             <Link to="/" >
                 <Flex gap="5px" alignItems="center">
                     <Img src={logo} w="60px" h="60px" />
@@ -117,7 +117,7 @@ export default function Navbar({props={}, handleSearch}){
 
                 <Tooltip label="Wishlist">
                     <Link to="/wishlist">
-                        <AiOutlineHeart style={{fontSize:'26px', color:'red'}}/>
+                        <AiOutlineHeart style={{fontSize:'26px', color:'yellow'}}/>
                     </Link>
                 </Tooltip>
                 {
