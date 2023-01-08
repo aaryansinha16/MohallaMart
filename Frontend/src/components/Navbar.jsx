@@ -66,7 +66,7 @@ export default function Navbar({props={}, handleSearch}){
     }
     return(
         <HStack w='95%' m='auto' position='sticky' top='0%' zIndex='1000' alignItems="center" justify='space-between' py={3} px={6} borderRadius='3xl'
-        bgColor='rgba(255, 255, 255, .70)' style={{backdropFilter: 'blur(7px)'}} boxShadow='xl'>
+        bgColor='rgba(255, 255, 255, .40)' style={{backdropFilter: 'blur(7px)'}} boxShadow='xl'>
             <Link to="/" >
                 <Flex gap="5px" alignItems="center">
                     <Img src={logo} w="60px" h="60px" />
