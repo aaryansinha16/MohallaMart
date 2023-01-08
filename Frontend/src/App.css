@@ -278,7 +278,7 @@ body::-webkit-scrollbar-thumb {
 /* ! STYLES FOR MOVING TEXT ? SUBSTITUTE OF MARQUEE tag */
 /* Makes the animation pause on hover */
 .moving-text:hover{
-  animation-play-state: paused;
+  cursor:default;
 }
 
 /* The animation */

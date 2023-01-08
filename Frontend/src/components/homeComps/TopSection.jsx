@@ -28,7 +28,7 @@ const TopSection = () => {
                 w='80%'
                 textAlign='left'
                 >
-                SNACK WITH NO LIMITS
+                SHOP WITH NO LIMITS
             </Text>
 
             <Flex justifyContent='space-between' alignItems='center' w='100%' pt='30px'>

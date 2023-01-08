@@ -1,6 +1,7 @@
-import { Grid , Flex, Text, Input, Button, Img, Box, VStack } from "@chakra-ui/react"
+import { Grid , Flex, Text, Input, Button, Img, Box, VStack, Image } from "@chakra-ui/react"
 
 import logo from "../Resources/blackCircle.png"
+import CurlyArrow from '../Resources/curlyArrow.png'
 
 
 
@@ -42,7 +43,7 @@ export default function Footer(){
                 w='fit-content'
                 position='relative'
                 fontFamily='Titan One'
-                fontSize={{md:'84px'}}
+                fontSize={{base:'44px',md:'84px'}}
                 padding='0px 50px 0px 50px'
                 color='#816101'
                 textAlign='center'
@@ -63,8 +64,8 @@ export default function Footer(){
                 className="moving-text" 
                 fontFamily='Modak' 
                 color='#00957b' 
-                fontSize='74px' 
-                gap='70px' 
+                fontSize={{base:'34px', md:'74px'}} 
+                gap={{base:'0px',md:'70px'}} 
                 w='100%' 
                 m='auto' 
                 mt='-70px'
@@ -74,7 +75,7 @@ export default function Footer(){
                 <Text lineHeight='70px' >TRY NOW</Text>
                 <Text lineHeight='70px' >TRY NOW</Text>
                 <Text lineHeight='70px' >TRY NOW</Text>
-                <Text lineHeight='70px' >TRY NOW</Text>
+                {/* <Text lineHeight='70px' >TRY NOW</Text> */}
             </Flex>
 
             <Text
@@ -91,6 +92,7 @@ export default function Footer(){
             >
                 MOHALLAMART
             </Text>
+
             <Flex
                 justifyContent='center'
                 gap='1px'
@@ -101,6 +103,10 @@ export default function Footer(){
                 mt='70px'
                 display={{base:'none', md:'flex'}}
             >
+                <Flex display={{base:'none', md:'flex'}} flexDir='column' alignItems='flex-end' position='relative' w='fit-content' left='-10px'>
+                    <Text color='#fdc92e' fontSize='18px' fontFamily='cursive' transform='rotate(-20deg)'>Hover me!</Text>
+                    <Image src={CurlyArrow} w='50px' />
+                </Flex>
                 <Text className="brand" zIndex='12'>M</Text>
                 <Text className="brand" zIndex='11'>O</Text>
                 <Text className="brand" zIndex='10'>H</Text>
