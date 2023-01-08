@@ -11,7 +11,7 @@ import "swiper/css/pagination";
 import 'swiper/css/bundle'
 
 // import required modules
-import { EffectCoverflow, Navigation, Pagination } from "swiper";
+import { Autoplay, EffectCoverflow, Navigation, Pagination } from "swiper";
 import { Box, Flex, Image } from "@chakra-ui/react";
 import Right from '../../Resources/right.png'
 
@@ -45,6 +45,10 @@ const ExploreSwiper = () => {
             slidesPerView={3}
             slidesPerGroup={1}
             // navigation={true}
+            autoplay={{
+                delay: 2500,
+                disableOnInteraction: false,
+              }}
             loop={true}
             loopFillGroupWithBlank={false}
             coverflowEffect={{
@@ -60,7 +64,7 @@ const ExploreSwiper = () => {
                     return '<span class="' + className + '">'  + "</span>";
                 }
             }}
-            modules={[EffectCoverflow, Pagination, Navigation]}
+            modules={[Autoplay,EffectCoverflow, Pagination, Navigation]}
             className="mySwiper"
             >
             <SwiperSlide>

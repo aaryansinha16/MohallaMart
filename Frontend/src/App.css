@@ -187,6 +187,18 @@ body::-webkit-scrollbar-thumb {
   100% { transform: translate(0, 0) rotate(0deg); }
 }
 
+.brand:hover{
+  animation : brandAnim .3s infinite linear;
+  cursor: pointer;
+}
+@keyframes brandAnim {
+  0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  25% { transform: translate(5px, 5px) rotate(5deg) scale(1.2); }
+  50% { transform: translate(0, 0) rotate(0eg)scale(1.3); }
+  75% { transform: translate(-5px, 5px) rotate(-5deg)scale(1.2); }
+  100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+}
+
 .test{
   cursor:default;
 }
@@ -262,3 +274,22 @@ body::-webkit-scrollbar-thumb {
 }
 
 
+
+/* ! STYLES FOR MOVING TEXT ? SUBSTITUTE OF MARQUEE tag */
+/* Makes the animation pause on hover */
+.moving-text:hover{
+  animation-play-state: paused;
+}
+
+/* The animation */
+@keyframes marquee{
+  0%{transform: translateX(100%);}
+  100%{transform: translateX(-100%);}
+}
+
+/* media query to enable animation for only those who want it */
+@media (prefers-reduced-motion: no-preference) {
+  .moving-text{
+      animation: marquee 5s linear infinite;
+  }
+}

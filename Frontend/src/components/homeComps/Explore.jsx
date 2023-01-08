@@ -17,7 +17,7 @@ const Explore = () => {
         borderRadius='100px 100px 0 0'
         bg='#00957b'
         mt='140px'
-        pb='300px'
+        pb='100px'
     >
         <a href='#explore' className='test'>
         <Box
