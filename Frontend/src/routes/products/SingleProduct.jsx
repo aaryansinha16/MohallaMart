@@ -10,6 +10,7 @@ import {
   HStack,
   Tooltip,
   useToast,
+  Input,
 } from "@chakra-ui/react";
 import { RadioSizeCard } from "../../components/SingleProduct/RadioCard";
 import { AiOutlineStar } from "react-icons/ai";
@@ -24,13 +25,16 @@ import { useDispatch } from "react-redux";
 import { getSingleProduct } from "../../redux/products/product.action";
 import { postWishlistAction } from "../../redux/wishlist/wishlist.actions";
 import { postCartAction } from "../../redux/cart/cart.actions";
+import { useRef } from "react";
+import { io } from 'socket.io-client'
 
-
+const Socket = io.connect('http://localhost:3000')
 const SingleProductPage = ({props}) => {
   const [data, setData] = useState()
   const [reviews,setReviews] = useState()
   const [reRender, setReRender] = useState(false)
   const [loggedIn , setLoggedIn]  = useState("")
+  const reviewRef = useRef(null)
 
   const params = useParams()
   const dispatch = useDispatch()
@@ -75,7 +79,18 @@ const SingleProductPage = ({props}) => {
   }
 
   const handleClick= () => {}
-  const handleSubmitReview=(data,fillStar)=>{}
+  const handleSubmitReview=(data,fillStar)=>{
+    // console.log(reviewRef.current.value)
+    if(reviewRef.current.value != ""){
+      Socket.emit("new review", {
+        userId: '63b326771a3dd7f1ca16731a',
+        productId: params.id,
+        review: reviewRef.current.value,
+        rating: 4.5
+      })
+      alert("Review sent")
+    }
+  }
   const deleteReview =()=>{}
 
   return (
@@ -186,6 +201,8 @@ const SingleProductPage = ({props}) => {
           </Box>
         </Tooltip>
       </Box>
+      <Input type='text' placeholder='test' ref={reviewRef} />
+      <Button onClick={handleSubmitReview}>Text</Button>
         <TabsSection handleSubmitReview={handleSubmitReview} loggedIn={loggedIn} showReviews={reviews} deleteReview={deleteReview}/>
     </>
   );
