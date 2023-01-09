@@ -82,7 +82,7 @@ export default function Navbar({props={}, handleSearch}){
                 {/* <Link to="/login">
                     <BiUser style={{fontSize:'26px'}}/>
                 </Link> */}
-                <Menu >
+                <Menu>
                     <MenuButton>
                         <BiUser style={{fontSize:'26px'}}/>
                     </MenuButton>
@@ -90,17 +90,17 @@ export default function Navbar({props={}, handleSearch}){
                         <Link to="/login">
                             {
                                 props ? 
-                                <MenuItem  command='⌘T' onClick={handleLogout}>
+                                <MenuItem color='black' command='⌘T' onClick={handleLogout}>
                                     Logout
                                 </MenuItem>
                                 :
-                                <MenuItem  command='⌘T'>
+                                <MenuItem color='black' command='⌘T'>
                                     Login
                                 </MenuItem>
                             }
                         </Link>
                         <Link to='/becomeseller'>
-                            <MenuItem command='⌘N'>
+                            <MenuItem color='black' command='⌘N'>
                                 Become a Seller
                             </MenuItem>
                         </Link>

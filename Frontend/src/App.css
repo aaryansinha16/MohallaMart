@@ -1,3 +1,21 @@
+*{
+  cursor: none;
+}
+.cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 16px;
+  background-color: white;
+  mix-blend-mode:difference;
+  z-index: 999999;
+  pointer-events: none;
+  transform: scale(0);
+}
+
+
 body, .App{
     width: 100%;
     margin: 0px;
@@ -176,7 +194,7 @@ body::-webkit-scrollbar-thumb {
 
 .productImg:hover{
   animation: tilt-n-move-shaking .3s 3 linear;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 @keyframes tilt-n-move-shaking {
@@ -189,7 +207,7 @@ body::-webkit-scrollbar-thumb {
 
 .brand:hover{
   animation : brandAnim .3s infinite linear;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 @keyframes brandAnim {
   0% { transform: translate(0, 0) rotate(0deg) scale(1); }
@@ -199,9 +217,6 @@ body::-webkit-scrollbar-thumb {
   100% { transform: translate(0, 0) rotate(0deg) scale(1); }
 }
 
-.test{
-  cursor:default;
-}
 
 /* ! SWIPER CSS */
 .swiper {
@@ -263,7 +278,7 @@ body::-webkit-scrollbar-thumb {
   height: 60px;
   width: 60px;
   transition: .1s linear;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .right:hover{
@@ -277,9 +292,6 @@ body::-webkit-scrollbar-thumb {
 
 /* ! STYLES FOR MOVING TEXT ? SUBSTITUTE OF MARQUEE tag */
 /* Makes the animation pause on hover */
-.moving-text:hover{
-  cursor:default;
-}
 
 /* The animation */
 @keyframes marquee{
@@ -292,4 +304,49 @@ body::-webkit-scrollbar-thumb {
   .moving-text{
       animation: marquee 5s linear infinite;
   }
+}
+
+
+/* .cursor {
+  transform: translate(-50%, -50%) scale(8);
+} */
+
+/* ? Blobs animation */
+
+@media all and (min-width: 650px) and (max-width: 2000px) {
+    .blobL:hover{
+      animation : move 1s 1 linear;
+      /* transition: 2s linear; */
+    }
+    .blobR:hover{
+      animation: moveR 1s 1 linear;
+    }
+    @keyframes move{
+      0%{
+        /* transform:translate(0px,0px); */
+        left: 0px;
+      }
+      50%{
+        /* transform: translate(5px, 0px) */
+        left: 25px;
+      }
+      100%{
+        /* transform: translate(0px, 0px) */
+        left: 0px;
+      }
+    }
+    @keyframes moveR{
+      0%{
+        /* transform:translate(0px,0px); */
+        right: 0px;
+      }
+      50%{
+        /* transform: translate(5px, 0px) */
+        right: 25px;
+      }
+      100%{
+        /* transform: translate(0px, 0px) */
+        right: 0px;
+      }
+    }
 }

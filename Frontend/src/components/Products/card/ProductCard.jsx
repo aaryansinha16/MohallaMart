@@ -144,7 +144,7 @@ import { postWishlistAction } from '../../../redux/wishlist/wishlist.actions';
                 <Box onClick={() => {
                   handleWishlist(_id)
                   setStyles(!styles)
-                }} cursor='pointer' position='absolute' top='3%' left="87%" background='white'  fontSize='20px'  padding="5px" borderRadius='13px'
+                }} position='absolute' top='3%' left="87%" background='white'  fontSize='20px'  padding="5px" borderRadius='13px'
                 _hover={{bg:'pink'}}>
                   {
                     isWishlist == true ? 

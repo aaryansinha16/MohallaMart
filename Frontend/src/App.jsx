@@ -4,31 +4,38 @@ import Footer from './components/Footer'
 import Navbar from './components/Navbar'
 import AllRoutes from './routes/AllRoutes'
 
+import { motion, useMotionValue, useSpring } from "framer-motion";
+import { useEffect } from 'react'
+
 function App() {
 
   const { colorMode, toggleColorMode } = useColorMode()
   const bg = useColorModeValue('#f0f1f7', 'green')
   console.log(colorMode)
 
+
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
+
+  const springConfig = { damping: 25, stiffness: 700 };
+  const cursorXSpring = useSpring(cursorX, springConfig);
+  const cursorYSpring = useSpring(cursorY, springConfig);
+
+  useEffect(() => {
+    const moveCursor = (e) => {
+      cursorX.set(e.clientX - 16);
+      cursorY.set(e.clientY - 16);
+    };
+
+    window.addEventListener("mousemove", moveCursor);
+
+    return () => {
+      window.removeEventListener("mousemove", moveCursor);
+    };
+  }, []);
+
   return (
     <div className="App">
-      {/* <Box bgColor={bg}
-          boxShadow="md"
-          p="1"
-          position="fixed"
-          width="100%"
-          top='0'
-          zIndex='100'
-          display={{base: 'none', xl:'block'}}
-          >
-            <DeskNav/>
-      </Box> */}
-      {/* <Navbar /> */}
-
-      {/* <Box w='100%' display={{xl: 'none'}} m='auto' mb='-150px' pt={6} pb={6} pl={3} pr={3} bg={bg}>
-        <RespNav/>
-      </Box> */}
-
 
       <AllRoutes/>
       {/* <Button onClick={toggleColorMode} mt='145px'>Toggle</Button> */}
@@ -36,7 +43,13 @@ function App() {
       <Box w='100%'>
         {/* <Footer/> */}
       </Box>
-      
+      <motion.div
+        className="cursor"
+        style={{
+          translateX: cursorXSpring,
+          translateY: cursorYSpring,
+        }}
+      />
     </div>
   )
 }

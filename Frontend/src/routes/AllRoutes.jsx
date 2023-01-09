@@ -26,7 +26,7 @@ const AllRoutes = () => {
         } />
         <Route path='/products' element={
           <>
-          <Navbar />
+          {/* <Navbar /> */}
             <Products/>
           <Footer />
           </>

@@ -29,6 +29,7 @@ const ExploreSwiper = () => {
     return (
     <Flex w='80%' m='auto' justifyContent='space-between' alignItems='center'>
         <Box
+            zIndex='1'
             boxShadow='#046a5a 0px 20px 20px -12px inset, #046a5a 0px 30px 36px -18px inset'
             h='150px'
             w='80px'
@@ -100,6 +101,7 @@ const ExploreSwiper = () => {
 
         </Swiper>
         <Box
+            zIndex='1'
             boxShadow='#046a5a 0px 20px 20px -12px inset, #046a5a 0px 30px 36px -18px inset'
             h='150px'
             w='80px'

@@ -76,11 +76,12 @@ export default function Products({props}={}) {
     <>
         {/* // ? Below is the code for Breadcrumb's and Sorting strip */}
         <Box
-            mt='40px'
             w='100%'
-            mb='20px'
+            className="home"
+            color='white'
         >
-            <Flex justify='flex-start' w='80%' m='auto' fontSize='12px' color='#6c6d70'>
+            <Navbar/>
+            <Flex justify='flex-start' w='80%' m='auto' fontSize='12px' mt='30px' color='white'>
                     <Breadcrumb spacing='8px' separator={<ChevronRightIcon color='gray.500' />}>
                         <BreadcrumbItem>
                             <BreadcrumbLink href='/'>MohallaMart</BreadcrumbLink>
@@ -92,13 +93,13 @@ export default function Products({props}={}) {
                     </Breadcrumb>
             </Flex>
 
-            <Divider/>
+            {/* <Divider/> */}
 
             <Flex justify={{base:'space-between', lg:'flex-start'}} w='80%' m='auto' align='center' pt={2} pb={2} fontSize='14px'>
                 <HStack w={{base:'30%',lg:'20%'}} align='center'>
-                    <Select placeholder="Sort By" variant='outline'  fontWeight='semibold' border='1px solid orange' colorScheme='orange' focusBorderColor="orange" w='150px' onChange={handleFilter}>
-                        <option value='DESC'>High to Low</option>
-                        <option value='ASC'>Low to High</option>
+                    <Select placeholder="Sort By" _placeholder={{color:'black'}} variant='outline' fontWeight='semibold' border='1px solid orange' colorScheme='orange' focusBorderColor="green" w='150px' onChange={handleFilter}>
+                        <option style={{color:'black'}} value='DESC'>High to Low</option>
+                        <option style={{color:'black'}} value='ASC'>Low to High</option>
                     </Select>
                 </HStack>
 
@@ -131,15 +132,18 @@ export default function Products({props}={}) {
 
 
             {/* //? Here starts the code for Product's grid & Filters */}
-            <Image display={{base:'none', md:'block'}} src={blob1} w='300px' position='fixed' top='40%' left='20%' zIndex='-10' />
+            {/* <Image display={{base:'none', md:'block'}} src={blob1} w='300px' position='fixed' top='40%' left='20%' zIndex='-10' />
             <Image display={{base:'none', md:'block'}} src={blob2} w='400px' position='fixed' top='40%' left='80%' zIndex='-10' />
-            <Image display={{base:'none', md:'block'}} src={blob3} w='400px' position='fixed' top='20%' left='50%' zIndex='-10' />
+            <Image display={{base:'none', md:'block'}} src={blob3} w='400px' position='fixed' top='20%' left='50%' zIndex='-10' /> */}
             {/* <Image display={{base:'none', md:'block'}} src='https://animoto.com/static/TealDots-212c4a91665ce0cc624cdf92514a34d6.svg' w='180px' position='fixed' top='20%' left='0%' zIndex='-10' /> */}
             <Box w='100%' 
-              py={3}
-              backgroundSize='cover'
-              backgroundImage={bgSvg}
-              backgroundAttachment='fixed'
+                py={3}
+                backgroundSize='cover'
+                //   backgroundImage={bgSvg}
+                backgroundAttachment='fixed'
+                m='auto'
+                borderRadius='100px 100px 0 0'
+                bg='#00957b'
               >
 
                 <Flex m='auto' mt='30px' mb='30px' w={{lg:'90%', xl:'80%'}} justify={{base:'center', lg:'space-between'}}  >

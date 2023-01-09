@@ -13,7 +13,7 @@ export default function CheckOutCartCard({
     const {handleDelete} = useContext(AppContext)
 
     return (
-        <Box boxShadow='lg' w='90%' p={8} _hover={{boxShadow:'2xl', cursor:'pointer'}}>
+        <Box boxShadow='lg' w='90%' p={8} _hover={{boxShadow:'2xl'}}>
             <Text textAlign='left' w='100%' fontSize='2xl' fontWeight='semibold'>Shippment from {brand}</Text>
             <Box w='100%' h='1px' bg='gray'></Box>
             <Flex justify='space-between' align='center'>

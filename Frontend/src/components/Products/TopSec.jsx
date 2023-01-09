@@ -20,7 +20,7 @@ const TopSec = ({handleSearch}) => {
         >
 
             <Box w='30px' >
-                <SearchIcon cursor='pointer' onClick={() => handleSearch(queryRef.current.value)} color='gray' fontSize='20px'/>
+                <SearchIcon onClick={() => handleSearch(queryRef.current.value)} color='gray' fontSize='20px'/>
             </Box>
 
             <Input
