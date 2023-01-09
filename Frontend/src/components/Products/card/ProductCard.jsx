@@ -108,12 +108,12 @@ import { postWishlistAction } from '../../../redux/wishlist/wishlist.actions';
     }
 
     return (
-      <Flex alignItems="center" justifyContent="center" bgColor='rgba(255, 255, 255, .15)' _hover={{bgColor:'rgba(255, 255, 255, .55)'}} style={{backdropFilter: 'blur(7px)'}}
+      <Flex alignItems="center" justifyContent="center" bgColor='rgba(255, 255, 255, .25)' _hover={{bgColor:'transparent', boxShadow:'none'}} style={{backdropFilter: 'blur(7px)'}}
          shadow='lg' rounded='xl'
       >
         <Box
           maxW="sm"
-          h={{base:'auto', lg:'500px'}}
+          // h={{base:'auto', lg:'500px'}}
           >
   
           <Link href={`/products/${_id}`}>
@@ -132,7 +132,7 @@ import { postWishlistAction } from '../../../redux/wishlist/wishlist.actions';
               placement={'bottom'}
               color={'gray.800'}
               fontSize={'0.8em'}>
-                <DeleteIcon onClick={() => {handleDelWishlist(_id)}} color='red' cursor='pointer' position='absolute' top='3%' left="87%" background='white' fontSize='26px'  padding="5px" borderRadius='13px'/>
+                <DeleteIcon color='red' cursor='pointer' position='absolute' top='3%' left="87%" background='white' fontSize='26px'  padding="5px" borderRadius='13px'/>
               </Tooltip>
               :
               <Tooltip
@@ -180,7 +180,7 @@ import { postWishlistAction } from '../../../redux/wishlist/wishlist.actions';
                 placement={'top'}
                 color={'gray.800'}
                 fontSize={'0.8em'}>
-                <IconButton onClick={() => handleAddToCart(_id)} aria-label='add-to-cart' variant='ghost' size='lg' colorScheme='yellow' icon={<FiShoppingCart />}/>
+                <IconButton onClick={() => handleAddToCart(_id)} aria-label='add-to-cart' color='#816101' bg='#fdc92e' variant='solid' size='lg' colorScheme='yellow' icon={<FiShoppingCart />}/>
               </Tooltip>
             </Flex>
   

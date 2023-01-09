@@ -14,7 +14,7 @@ export default function MidSec({data,wishlist, page, setPage, setRender, currPag
             <SimpleGrid minChildWidth='250px' placeItems='center' gap={4} 
             >
                 {
-                    data?.map((item) => {
+                    data?.slice(0,15).map((item) => {
                         if(currPage != 'wishlist'){
                             let wish = wishlist?.filter((el) => item._id == el.productId._id)
                             // console.log(wish,'filter')
@@ -28,9 +28,8 @@ export default function MidSec({data,wishlist, page, setPage, setRender, currPag
                 }
             </SimpleGrid>
             <Box m='auto' mt='20px' display={{base:'none', lg:'block'}}>
-                {/* <PaginationComponent currentPage={page} totalPages={totalPages} setPage={setPage} /> */}
             </Box>
-            <Box display={{ lg:'none'}}>
+            <Box >
                 <Flex justify='center' align='center' gap={3} >
                     <Button disabled={page === 1} onClick={() => setPage(page-1)} colorScheme='purple'>Prev</Button>
                     <Text fontSize='2xl'>{page}</Text>

@@ -30,6 +30,7 @@ const TopSec = ({handleSearch}) => {
                 fontSize='18px'
                 placeholder='Search Products...'
                 variant='unstyled'
+                color='black'
             />
 
             {/* <CloseIcon w={2} h={3} bg="gray.50" borderRadius='full' onClick={handleClick}/> */}
@@ -55,16 +56,16 @@ const TopSec = ({handleSearch}) => {
                     </MenuButton>
                     <MenuList minWidth='240px' overflowY='scroll' h='300px' >
                             <MenuOptionGroup type='radio' onChange={(e) => setMenuItem(e.toUpperCase())} zIndex='100'>
-                                <MenuItemOption value='All Departments'>All Departments</MenuItemOption>
-                                <MenuItemOption value='phone'>Auto</MenuItemOption>
-                                <MenuItemOption value='baby'>Baby</MenuItemOption>
-                                <MenuItemOption value='beauty'>Beauty</MenuItemOption>
-                                <MenuItemOption value='books'>Books</MenuItemOption>
-                                <MenuItemOption value='business'>Business</MenuItemOption>
-                                <MenuItemOption value='clothes'>Clothes</MenuItemOption>
-                                <MenuItemOption value='collectibles'>Collectibles</MenuItemOption>
-                                <MenuItemOption value='computers'>Computers</MenuItemOption>
-                                <MenuItemOption value='crafts'>Crafts</MenuItemOption>
+                                <MenuItemOption color='black' value='All Departments'>All Departments</MenuItemOption>
+                                <MenuItemOption color='black' value='phone'>Auto</MenuItemOption>
+                                <MenuItemOption color='black' value='baby'>Baby</MenuItemOption>
+                                <MenuItemOption color='black' value='beauty'>Beauty</MenuItemOption>
+                                <MenuItemOption color='black' value='books'>Books</MenuItemOption>
+                                <MenuItemOption color='black' value='business'>Business</MenuItemOption>
+                                <MenuItemOption color='black' value='clothes'>Clothes</MenuItemOption>
+                                <MenuItemOption color='black' value='collectibles'>Collectibles</MenuItemOption>
+                                <MenuItemOption color='black' value='computers'>Computers</MenuItemOption>
+                                <MenuItemOption color='black' value='crafts'>Crafts</MenuItemOption>
                             </MenuOptionGroup>
                         </MenuList>
                     </>

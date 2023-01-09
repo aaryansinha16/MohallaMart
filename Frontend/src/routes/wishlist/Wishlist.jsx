@@ -44,13 +44,16 @@ const Wishlist = ({props}) => {
     }
 
   return (
-    <>
-
+    <Box className='home'>
+    <Navbar />
     <Box w='100%' 
         py={3}
         backgroundSize='cover'
-        backgroundImage={bgSvg}
-        backgroundAttachment='fixed'
+        // backgroundImage={bgSvg}
+        // backgroundAttachment='fixed'
+        borderRadius='100px 100px 0 0'
+        bg='#00957b'
+        // className='home'
         >
 
         <Flex m='auto' mt='30px' mb='30px' w='80%' justify={{base:'center', lg:'space-between'}}  >
@@ -69,7 +72,7 @@ const Wishlist = ({props}) => {
 
     </Box>
 
-    </>
+    </Box>
   )
 }
 

@@ -40,7 +40,7 @@ const AllRoutes = () => {
         } />
         <Route path='/wishlist' element={
           <>
-          <Navbar />
+          {/* <Navbar /> */}
             <Wishlist />
           <Footer />
           </>
