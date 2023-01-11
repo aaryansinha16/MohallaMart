@@ -80,13 +80,13 @@ const AllRoutes = () => {
             <Footer />
           </>
         } />
-        <Route path='/signup' element={
+        {/* <Route path='/signup' element={
           <>
             <Navbar />
               <Signup />
             <Footer />
           </>
-        } />
+        } /> */}
         <Route path='admin' element={<Admin />} />
     </Routes>
   )

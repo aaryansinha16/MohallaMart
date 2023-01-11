@@ -15,6 +15,7 @@ import { Autoplay, EffectCoverflow, Navigation, Pagination } from "swiper";
 import { Box, Flex, Image } from "@chakra-ui/react";
 import Right from '../../Resources/right.png'
 import ProductCard from "../Products/card/ProductCard";
+import DisplayProduct from "../Cards/DisplayProduct";
 
 const ExploreSwiper = ({products}) => {
     const sliderRef = useRef();
@@ -87,19 +88,11 @@ const ExploreSwiper = ({products}) => {
             modules={[Autoplay,EffectCoverflow, Pagination, Navigation]}
             className="mySwiper"
             >
-            {/* <SwiperSlide>
-            <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
-            </SwiperSlide>
-            <SwiperSlide>
-            <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-            </SwiperSlide>
-            <SwiperSlide>
-            <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
-            </SwiperSlide> */}
             {
                 products?.slice(3,8).map((item) => (
                     <SwiperSlide key={item._id}>
-                        <ProductCard {...item}/>
+                        {/* {console.log(item,'item')} */}
+                        <DisplayProduct {...item}/>
                     </SwiperSlide>
                 ))
             }

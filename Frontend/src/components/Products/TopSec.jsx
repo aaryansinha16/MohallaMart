@@ -3,7 +3,6 @@ import { Box, Button, Center, Divider, HStack, IconButton, Input, InputGroup, In
 import React, { useState , useRef} from 'react'
 import { FiCrosshair } from 'react-icons/fi'
 // import MidMenu from '../../../Components/Navbar/DeskNav/MidSec/MidMenu'
-// import { Button } from 'semantic-ui-react'
 
 const TopSec = ({handleSearch}) => {
     const [show, setShow] = React.useState(false)

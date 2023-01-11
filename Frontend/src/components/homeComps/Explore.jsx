@@ -113,7 +113,7 @@ const Explore = () => {
             <Image className='productImg' src={Dorito} w='33%' h={{base:'180px',md:'400px' ,lg:'450px',xl:'550px'}} zIndex='10'/>
             <Image className='productImg' src={Dorito} w='33%' h={{base:'150px',md:'350px' ,lg:'400px',xl:'500px'}}/>
         </Flex>
-            <Box w='100%' bg='#00957b' h={{base:'30px',md:'70px'}} position='relative' top={{base:'-30px', md:'-70px'}}></Box>
+            <Box w='100%' bg='#00957b' h={{base:'30px',md:'80px'}} position='relative' top={{base:'-30px', md:'-70px'}}></Box>
 
         <Box 
             className='blobL'
@@ -140,7 +140,7 @@ const Explore = () => {
         <Text
             color='white'
             fontSize={{base:'44px', md:'54px'}}
-            textShadow= "-7px 5px 0 #0e8c78"
+            textShadow= "-6px 5px 0 #117666"
             fontFamily='Modak'
             lineHeight='60px'
             w={{base:'100%', sm:'90%', md:'40%'}}

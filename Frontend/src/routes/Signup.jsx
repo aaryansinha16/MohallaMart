@@ -2,8 +2,8 @@ import {Link, useNavigate} from "react-router-dom"
 import { Grid, Text, Input, Flex, Button, Checkbox, InputGroup,InputLeftAddon, useToast, HStack, PinInput, PinInputField, FormLabel  } from "@chakra-ui/react"
 
 // Import Components
-import Navbar from "../components/Login/Navbar"
-import PasswordInput from "../components/Login/PasswordInput"
+// import Navbar from "../components/Login/Navbar"
+// import PasswordInput from "../components/Login/PasswordInput"
 import useForm from "../Hooks/useForm"
 
 // Import stylesheet
@@ -11,7 +11,7 @@ import style from "../styles/auth.module.css"
 
 // Images import 
 import { useRef } from "react"
-import BoxImage from "../components/Login/BoxImage"
+// import BoxImage from "../components/Login/BoxImage"
 import axios from "axios"
 import { useDispatch } from "react-redux"
 import { signupAction } from "../redux/auth/auth.actions"
@@ -93,7 +93,7 @@ export default function Signup(){
                     <Text >Already have an account? <Link to="/login">Sign in.</Link></Text>
                 </Flex>
             </Grid>
-           <BoxImage />
+           {/* <BoxImage /> */}
        </Grid>
     )
 }

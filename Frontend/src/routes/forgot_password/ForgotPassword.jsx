@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Grid, Img, Input, Text } from "@chakra-ui/react";
-import Navbar from "../../components/Login/Navbar";
+// import Navbar from "../../components/Login/Navbar";
 
 import forgot from "../../Resources/illustrations/gorgot.jpg"
 

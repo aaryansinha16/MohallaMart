@@ -15,6 +15,9 @@
   transform: scale(0);
 }
 
+body{
+  overflow-x: hidden;
+}
 
 body, .App{
     width: 100%;
@@ -191,6 +194,9 @@ body::-webkit-scrollbar-thumb {
   }
 }
 
+.productImg{
+  filter: drop-shadow(15px 20px 4px #117666);
+}
 
 .productImg:hover{
   animation: tilt-n-move-shaking .3s 3 linear;
@@ -229,6 +235,8 @@ body::-webkit-scrollbar-thumb {
 .swiper-slide {
   background-position: center !important;
   background-size: cover !important;
+  background-color: transparent !important;
+
   /* width: 500px !important; */
   /* height: 900px; */
   /* border: 10px solid yellow; */
