@@ -1,5 +1,5 @@
-import { Box, Flex, HStack, Image, Text } from '@chakra-ui/react'
-import React from 'react'
+import { Box, Flex, HStack, Image, Text, useToast } from '@chakra-ui/react'
+import React, { useEffect } from 'react'
 import Downarrow from '../../Resources/downarrow.svg'
 import Dorito from '../../Resources/dorito.png'
 import {Navigate, useNavigate, Link} from 'react-router-dom'
@@ -8,12 +8,34 @@ import { AiOutlineShoppingCart } from 'react-icons/ai'
 import {MdComputer, MdOutlineFastfood} from 'react-icons/md'
 import { TbDeviceGamepad2 } from 'react-icons/tb'
 import Wave from '../../Resources/wave.svg'
+import { useDispatch } from 'react-redux'
+import { getProductsAction } from '../../redux/products/product.action'
+import { useState } from 'react'
 
 const Explore = () => {
     const navigate = useNavigate()
-    // function handleScroll(){
-    //     navigate('/#explore')
-    // }
+
+    const dispatch = useDispatch()
+    const toast = useToast()
+    const [products, setProducts] = useState([])
+
+    useEffect(() => {
+        dispatch(getProductsAction())
+        .then((res) => {
+            // console.log(res, 'RESPONSE ALL PRODUCTS PAGE')
+            setProducts(res.prod)
+            toast({
+                title: "Products Fetched",
+                variant: 'subtle',
+                description: res.message,
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+            })
+        })
+        // console.log('test1')
+    }, [])
+
   return (
     <Box
         w='100%'
@@ -127,7 +149,7 @@ const Explore = () => {
         >
             TREND OF THE DAY!
         </Text>    
-        <ExploreSwiper />
+        <ExploreSwiper products={products}/>
 
         {/* //? CODE FOR MOVING ITEMS ANIMATION */}
         <Box

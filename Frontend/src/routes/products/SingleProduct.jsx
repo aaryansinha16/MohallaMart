@@ -35,22 +35,44 @@ const SingleProductPage = ({props}) => {
   const [reRender, setReRender] = useState(false)
   const [loggedIn , setLoggedIn]  = useState("")
   const reviewRef = useRef(null)
-
+  
   const params = useParams()
   const dispatch = useDispatch()
   const toast = useToast()
-
+  
   useEffect(() => {
-    dispatch(getSingleProduct(params.id))
-    .then((res) => {
-      console.log(res, 'RESPONSE FOR SINGLE PRODUCT GET')
-      setData(res.prod)
-    })
+    Socket.emit("new review", {review : "", productId: params.id})
   }, [])
 
-  const handleWishlist = () => {
-    dispatch(postWishlistAction('63b326771a3dd7f1ca16731a', params.id))
-    .then((res) => {
+  useEffect(() => {
+    // dispatch(getSingleProduct(params.id))
+    // .then((res) => {
+      //   console.log(res, 'RESPONSE FOR SINGLE PRODUCT GET')
+      //   setData(res.prod)
+      // })
+      
+      Socket.on("new review", (d) => {
+        setReviews(d)
+        console.log("Server said: ", d)
+      })
+    }, [])
+    
+  const handleSubmitReview=(data,fillStar)=>{
+    // console.log(reviewRef.current.value)
+    if(reviewRef.current.value != ""){
+      Socket.emit("new review", {
+        userId: '63b326771a3dd7f1ca16731a',
+        productId: params.id,
+        review: reviewRef.current.value,
+        rating: 4.5
+      })
+      alert("Review sent")
+    }
+  }
+    
+    const handleWishlist = () => {
+      dispatch(postWishlistAction('63b326771a3dd7f1ca16731a', params.id))
+      .then((res) => {
         console.log(res, 'WISHLIST RESPONSE')
         toast({
             title: res.message,
@@ -78,19 +100,6 @@ const SingleProductPage = ({props}) => {
     })
   }
 
-  const handleClick= () => {}
-  const handleSubmitReview=(data,fillStar)=>{
-    // console.log(reviewRef.current.value)
-    if(reviewRef.current.value != ""){
-      Socket.emit("new review", {
-        userId: '63b326771a3dd7f1ca16731a',
-        productId: params.id,
-        review: reviewRef.current.value,
-        rating: 4.5
-      })
-      alert("Review sent")
-    }
-  }
   const deleteReview =()=>{}
 
   return (

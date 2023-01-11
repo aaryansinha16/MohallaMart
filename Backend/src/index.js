@@ -45,10 +45,16 @@ io.on("connection", (conn) => {
     console.log("CONNECT", totalUser)
 
     conn.on('new review', async ({rating, review, userId, productId}) => {
+        if(review == ""){
+            let reviews = await reviewModel.find({productId})
+            io.emit("new review", reviews)
+            return
+        }
         let data = await reviewModel.create({rating, review, userId, productId})
-        console.log('DATA FROM FRONTEND',rating, review, userId, productId)
-
-        io.emit("new review", data)
+        // console.log("Not happening")
+        // console.log('DATA FROM FRONTEND',rating, review, userId, productId)
+        let reviews = await reviewModel.find({productId})
+        io.emit("new review", reviews)
     })
 
     conn.on("disconnect", () => {
