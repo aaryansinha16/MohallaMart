@@ -11,7 +11,7 @@ export default function MidSec({data,wishlist, page, setPage, setRender, currPag
 
     return(
         <Flex flexDir='column' zIndex='0' >
-            <SimpleGrid minChildWidth='250px' placeItems='center' gap={4} 
+            <SimpleGrid minChildWidth='270px' placeItems='center' gap={4} 
             >
                 {
                     data?.slice(0,15).map((item) => {

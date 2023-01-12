@@ -14,8 +14,8 @@ const TopSec = ({handleSearch}) => {
   return (
     // <VStack w='100%' h='100px' bg='orange' align='center' justify='center' zIndex='2'>
 
-        <HStack display={{base:'none', sm:'flex'}}  w={{base:'80%', md:'50%'}} borderRadius='md' py={{base:3, md:2}} px={5}  boxShadow='lg'
-        bgColor='rgba(255, 255, 255, .65)' style={{backdropFilter: 'blur(5px)'}} _hover={{bgColor:'rgba(255, 255, 255, .95)'}}
+        <HStack transform='translate(0, -40px)' display={{base:'none', sm:'flex'}}  w={{base:'80%', md:'50%'}} borderRadius='md' py={{base:3, md:2}} px={5}  boxShadow='lg'
+        bgColor='rgba(255, 255, 255, .85)' style={{backdropFilter: 'blur(5px)'}} _hover={{bgColor:'rgba(255, 255, 255, .95)'}}
         >
 
             <Box w='30px' >

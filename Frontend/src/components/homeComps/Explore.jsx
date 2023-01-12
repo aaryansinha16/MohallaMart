@@ -108,7 +108,7 @@ const Explore = () => {
             justifyContent='space-around'
             alignItems='flex-end'
             zIndex='10'
-        >
+            >
             <Image className='productImg' src={Dorito} w='33%' h={{base:'150px',md:'350px' ,lg:'400px',xl:'500px'}}/>
             <Image className='productImg' src={Dorito} w='33%' h={{base:'180px',md:'400px' ,lg:'450px',xl:'550px'}} zIndex='10'/>
             <Image className='productImg' src={Dorito} w='33%' h={{base:'150px',md:'350px' ,lg:'400px',xl:'500px'}}/>

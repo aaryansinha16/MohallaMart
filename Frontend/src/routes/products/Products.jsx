@@ -1,5 +1,5 @@
 import { ChevronRightIcon } from "@chakra-ui/icons";
-import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Button, Divider, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, HStack, Image, Input, Select, Text, useDisclosure, useToast } from "@chakra-ui/react";
+import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Button, Divider, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, HStack, Image, Input, Select, Text, useDisclosure, useToast, VStack } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 
 import LeftSec from "../../components/Products/LeftSec";
@@ -81,7 +81,7 @@ export default function Products({props}={}) {
             color='white'
         >
             <Navbar/>
-            <Flex justify='flex-start' w='80%' m='auto' fontSize='12px' mt='30px' color='white'>
+            {/* <Flex justify='flex-start' w='80%' m='auto' fontSize='12px' mt='30px' color='white'>
                     <Breadcrumb spacing='8px' separator={<ChevronRightIcon color='gray.500' />}>
                         <BreadcrumbItem>
                             <BreadcrumbLink href='/'>MohallaMart</BreadcrumbLink>
@@ -91,16 +91,16 @@ export default function Products({props}={}) {
                             <BreadcrumbLink href='/products'>Products</BreadcrumbLink>
                         </BreadcrumbItem>
                     </Breadcrumb>
-            </Flex>
+            </Flex> */}
 
             {/* <Divider/> */}
 
             <Flex justify={{base:'space-between', lg:'flex-start'}} w='80%' m='auto' align='center' pt={2} pb={2} fontSize='14px'>
                 <HStack w={{base:'30%',lg:'20%'}} align='center'>
-                    <Select placeholder="Sort By" _placeholder={{color:'black'}} variant='outline' fontWeight='semibold' border='1px solid orange' colorScheme='orange' focusBorderColor="green" w='150px' onChange={handleFilter}>
+                    {/* <Select placeholder="Sort By" _placeholder={{color:'black'}} variant='outline' fontWeight='semibold' border='1px solid orange' colorScheme='orange' focusBorderColor="green" w='150px' onChange={handleFilter}>
                         <option style={{color:'black'}} value='DESC'>High to Low</option>
                         <option style={{color:'black'}} value='ASC'>Low to High</option>
-                    </Select>
+                    </Select> */}
                 </HStack>
 
                 <Button display={{lg:'none'}} ref={btnRef} onClick={onOpen} variant='outline' rightIcon={<FiFilter/>}>Filters </Button>
@@ -137,6 +137,7 @@ export default function Products({props}={}) {
             <Image display={{base:'none', md:'block'}} src={blob3} w='400px' position='fixed' top='20%' left='50%' zIndex='-10' /> */}
             {/* <Image display={{base:'none', md:'block'}} src='https://animoto.com/static/TealDots-212c4a91665ce0cc624cdf92514a34d6.svg' w='180px' position='fixed' top='20%' left='0%' zIndex='-10' /> */}
             <Box w='100%' 
+                as={VStack}
                 py={3}
                 backgroundSize='cover'
                 //   backgroundImage={bgSvg}
@@ -144,7 +145,9 @@ export default function Products({props}={}) {
                 m='auto'
                 borderRadius='100px 100px 0 0'
                 bg='#00957b'
-              >
+                mt='40px'
+              > 
+                <TopSec />
 
                 <Flex m='auto' mt='30px' mb='30px' w={{lg:'90%', xl:'80%'}} justify={{base:'center', lg:'space-between'}}  >
 

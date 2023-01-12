@@ -322,12 +322,17 @@ body::-webkit-scrollbar-thumb {
 /* ? Blobs animation */
 
 @media all and (min-width: 650px) and (max-width: 2000px) {
+  .blobL, .blobR{
+    transition: 3s linear;
+  }
     .blobL:hover{
       animation : move 1s 1 linear;
-      /* transition: 2s linear; */
+
+      transition: 2s linear;
     }
     .blobR:hover{
       animation: moveR 1s 1 linear;
+      /* backdrop-filter: blur(4px) hue-rotate(40degbackdropFilter='blur(4px) hue-rotate(30deg)'); */
     }
     @keyframes move{
       0%{
@@ -357,4 +362,18 @@ body::-webkit-scrollbar-thumb {
         right: 0px;
       }
     }
+}
+
+.test:hover .cursor{
+  width: 100px !important;
+  border: 10px solid white;
+}
+
+.tab{
+  box-shadow: rgba(50, 50, 93, 0.95) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+
+.dashboard{
+  background-image: url(./Resources/bgImg.svg);
+  background-size: cover;
 }

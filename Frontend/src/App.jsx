@@ -26,13 +26,14 @@ function App() {
       cursorX.set(e.clientX - 16);
       cursorY.set(e.clientY - 16);
     };
-
+    
     window.addEventListener("mousemove", moveCursor);
-
+    
     return () => {
       window.removeEventListener("mousemove", moveCursor);
     };
   }, []);
+  
 
   return (
     <div className="App">

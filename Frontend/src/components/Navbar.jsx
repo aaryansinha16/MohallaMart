@@ -1,9 +1,9 @@
 
-import { Img, Flex, Button,  HStack, Menu, MenuButton, MenuList, MenuItem, Tooltip, useDisclosure, Collapse, Stack, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, DrawerFooter, VStack, cookieStorageManager, useToast } from "@chakra-ui/react";
+import { Img, Flex, Button,  HStack, Menu, MenuButton, MenuList, MenuItem, Tooltip, useDisclosure, Collapse, Stack, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, DrawerFooter, VStack, cookieStorageManager, useToast, MenuGroup, MenuDivider, Avatar, Text, Image } from "@chakra-ui/react";
 
 import {Link} from 'react-router-dom'
 
-import logo from "../Resources/logo-circle.png"
+import logo from "../Resources/logoR.png"
 import style from "../styles/navbar.module.css"
 import removedBG from '../Resources/removedBgMohallamart.png'
 
@@ -15,6 +15,8 @@ import { useRef, useState, useEffect } from "react";
 import axios from "axios";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import {GrUserAdmin} from 'react-icons/gr'
+import AvatarImg from '../Resources/avatar.jpg'
+import CurlyArrow from '../Resources/curlyArrow.png'
 
 export default function Navbar({props={}, handleSearch}){
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -65,23 +67,24 @@ export default function Navbar({props={}, handleSearch}){
         })
     }
     return(
-        <HStack w='95%' color='white' m='auto' position='sticky' top='7px' zIndex='1000' alignItems="center" justify='space-between' py={3} px={6} borderRadius='3xl'
-        bgColor='rgba(255, 255, 255, .20)' style={{backdropFilter: 'blur(7px)'}} boxShadow='xl'>
-            <Link to="/" >
-                <Flex gap="5px" alignItems="center">
-                    <Img src={logo} w="60px" h="60px" />
-                    <Img src={removedBG} w="250px"  display={{base:'none', sm:"none", md:"none", lg:"block" }} />
-                </Flex>
-            </Link>
+        <HStack 
+            w='95%' 
+            color='white' 
+            m='auto' 
+            position='sticky' 
+            top='7px' 
+            zIndex='1000' 
+            alignItems="center" 
+            justify='space-between' 
+            py={0} 
+            px={8} 
+            borderRadius='3xl'
+            bgColor='rgba(255, 255, 255, .10)' 
+            style={{backdropFilter: 'blur(10px)'}} 
+            boxShadow='none'>
+            
 
-            {/* <Box w='65%' border='1px solid red'> */}
-                <TopSec handleSearch={handleSearch} />
-            {/* </Box> */}
-
-            <Flex w='20%' justifyContent="space-evenly" display={{base:'none', sm:"none", md:"flex" }} >
-                {/* <Link to="/login">
-                    <BiUser style={{fontSize:'26px'}}/>
-                </Link> */}
+            <Flex w='30%' justifyContent="space-evenly" display={{base:'none', sm:"none", md:"flex" }} >
                 <Menu>
                     <MenuButton>
                         <BiUser style={{fontSize:'26px'}}/>
@@ -130,6 +133,40 @@ export default function Navbar({props={}, handleSearch}){
 
                 }
             </Flex>
+
+            
+            <Flex w='40%' gap="5px" alignItems="center" justifyContent='center'>
+                <Link to="/" >
+                    <Img src={logo} w="90px" transform='scale(1.5)' transition='1s ease'  _hover={{transform:'scale(1.5) rotate(360deg)'}}/>
+                </Link>
+            </Flex>
+
+            {/* <Button size='lg' colorScheme='yellow'  color='white'>Become Merchent</Button> */}
+
+            <Menu isLazy>
+                <Flex
+                    w='30%'
+                    alignItems='center'
+                    justifyContent='flex-end'>
+                    <Flex display={{base:'none', md:'flex'}} flexDir='column' alignItems='flex-end' position='relative' w='fit-content' left='-10px'>
+                        <Text color='gold' fontSize='12px' fontFamily='cursive' transform='rotate(-20deg)'>Click Me!</Text>
+                        <Image src={CurlyArrow} w='30px' />
+                    </Flex>
+                    <Avatar src={AvatarImg} as={MenuButton} _hover={{ transform:'scale(1.6)'}} />
+                </Flex>
+                <MenuList color='black'>
+                    <MenuGroup title='Profile'>
+                    <MenuItem><Link to='/admin'>My Account</Link></MenuItem>
+                    <MenuItem>Payments </MenuItem>
+                    </MenuGroup>
+                    <MenuDivider />
+                    <MenuGroup title='Help'>
+                    <MenuItem>Docs</MenuItem>
+                    <MenuItem>FAQ</MenuItem>
+                    </MenuGroup>
+                </MenuList>
+            </Menu>
+
 
              
             <Button ref={btnRef} colorScheme='transparent' color="black" border="1px solid" onClick={onOpen} display={{md:'none'}}>

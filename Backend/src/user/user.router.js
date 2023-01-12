@@ -49,7 +49,7 @@ app.post('/signup', async(req, res) => {
 app.post('/login', async(req, res) => {
     let {email, password} = req.body
 
-    let user = await userModel.findOne({email: email})
+    let user = await userModel.findOne({email, password})
     if(!user){
         return res.status(403).send({
             message: "Email doesn't exist's in our record",
