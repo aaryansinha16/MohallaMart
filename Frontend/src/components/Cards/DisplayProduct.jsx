@@ -1,7 +1,11 @@
-import { Button,chakra, Box, Flex, Image, useDisclosure,Modal, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, ModalOverlay, Text } from '@chakra-ui/react'
+import { Button,chakra, Box, Flex, Image, useDisclosure,Modal, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, ModalOverlay, Text, useToast } from '@chakra-ui/react'
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import {Link} from 'react-router-dom'
+import { postCartAction } from '../../redux/cart/cart.actions'
 import Login from '../../routes/Login'
+
+let localData = JSON.parse(localStorage.getItem("userData")) || undefined
 
 const DisplayProduct = ({
     _id,
@@ -19,10 +23,30 @@ const DisplayProduct = ({
   )
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [overlay, setOverlay] = useState(<OverlayOne />)
+
+  const toast = useToast()
+  const dispatch = useDispatch()
   
   function handleClick(){
-    onOpen()
-    setOverlay(<OverlayOne/>)
+    if(localData == undefined){
+      onOpen()
+      setOverlay(<OverlayOne/>)
+    }
+    else{
+      dispatch((postCartAction(localData._id ,_id)))
+      .then((res) => {
+          console.log(res,'RESPONSE POST CART')
+          // setRender((prev) => !prev)
+          toast({
+              title: res.message,
+              variant: 'subtle',
+              description: res.message,
+              status: res.message.split(' ').includes("added") ? 'success' : 'info',
+              duration: 5000,
+              isClosable: true,
+          })
+      })
+    }
   }
 
   return (

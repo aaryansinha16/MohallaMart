@@ -4,15 +4,18 @@ import {
     Heading,
     Input,
     Link,
+    ModalOverlay,
     Stack,
     Text,
     useColorModeValue as mode,
+    useDisclosure,
     VStack,
   } from '@chakra-ui/react'
   import * as React from 'react'
   import { FaArrowRight } from 'react-icons/fa'
   import { formatPrice } from './PriceTag.jsx'
   import {useRef} from 'react'
+import Login from '../../routes/Login.jsx'
   
   // type OrderSummaryItemProps = {
   //   label: string
@@ -42,6 +45,15 @@ import {
     React.useEffect(() => {
         console.log(nameRef.current.value.length, 'namefer')
     }, [])
+
+    const OverlayOne = () => (
+      <ModalOverlay
+      bg='blackAlpha.300'
+      backdropFilter='blur(10px) hue-rotate(90deg)'
+      />
+    )
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const [overlay, setOverlay] = React.useState(<OverlayOne />)
 
     return (
       <Stack spacing="8" borderWidth="1px" rounded="lg" padding="8" width="full">
@@ -74,9 +86,17 @@ import {
             </Text>
           </Flex>
         </Stack>
-        <Button disabled={name.length == 0 ? true : false}  colorScheme="blue" size="lg" fontSize="md" rightIcon={<FaArrowRight />} onClick={() => makePayment(nameRef.current.value, emailRef.current.value, contactRef.current.value, totalCost)}>
+        <Button disabled={name.length == 0 ? true : false}  colorScheme="blue" size="lg" fontSize="md" rightIcon={<FaArrowRight />} onClick={() => {
+            let localData = JSON.parse(localStorage.getItem("userData")) || undefined
+            if(localData != undefined) makePayment(nameRef.current.value, emailRef.current.value, contactRef.current.value, totalCost)
+            else {
+              onOpen()
+              setOverlay(<OverlayOne />)
+            }
+          }}>
           Purchase
         </Button>
+        <Login isOpen={isOpen} onClose={onClose}/>
       </Stack>
     )
   }

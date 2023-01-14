@@ -20,12 +20,12 @@ export default function Footer(){
             justifyContent='space-between'
             alignItems='center'         
         >
-            <Box
+            {/* <Box
                 w='100%'
                 h='70px'
                 bg='#00957b'
                 borderRadius='0 0 100px 100px'
-            ></Box>
+            ></Box> */}
 
             <Text
                 color='white'
@@ -36,7 +36,7 @@ export default function Footer(){
                 w={{base:'100%', sm:'90%', md:'50%'}}
                 textAlign='center'
                 m='auto'
-                mt='50px'
+                pt='100px'
                 mb='30px'
             >
                 WHAT ARE YOU WAITING FOR? TRY MOHALLA MART NOW!

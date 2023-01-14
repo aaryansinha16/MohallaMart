@@ -29,11 +29,23 @@ const Wishlist = ({props}) => {
     // console.log(item, 'WISHLIST')
 
     useEffect(() => {
-        dispatch(getWishlistAction('63b326771a3dd7f1ca16731a'))
-        .then((res) => {
-            console.log(res, 'RESPONSE GET WISHLIST')
-            setData(res.items)
-        })
+        let localData = JSON.parse(localStorage.getItem("userData")) || undefined
+
+        if(localData != undefined){
+            dispatch(getWishlistAction(localData._id))
+            .then((res) => {
+                console.log(res, 'RESPONSE GET WISHLIST')
+                setData(res.items)
+            })
+        }else{
+            toast({
+                title: 'Login Or Signup first',
+                description: "You need to login first to get wishlist products",
+                status: "warning",
+                duration : 4000,
+                isClosable : true
+            })
+        }
     }, [render])
 
     const getProductByPrice = (from, to) => {

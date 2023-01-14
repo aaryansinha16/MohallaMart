@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Heading, SimpleGrid, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Flex, Grid, Heading, SimpleGrid, Text, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 // import { getProducts, getTotalPages } from "../../../API/api";
 // import PaginationComponent from "../../../Components/Pagination/PaginationComponent";
@@ -11,7 +11,7 @@ export default function MidSec({data,wishlist, page, setPage, setRender, currPag
 
     return(
         <Flex flexDir='column' zIndex='0' >
-            <SimpleGrid minChildWidth='270px' placeItems='center' gap={4} 
+            <Grid gridTemplateColumns={{base:'repeat(1, 1fr)', md:'repeat(2,1fr)', xl:'repeat(3,1fr)'}} placeItems='center' gap={4} 
             >
                 {
                     data?.slice(0,15).map((item) => {
@@ -26,7 +26,7 @@ export default function MidSec({data,wishlist, page, setPage, setRender, currPag
                         else return <ProductCard {...item.productId} key={item._id} isWishlist={true} setRender={setRender} />
                     })
                 }
-            </SimpleGrid>
+            </Grid>
             <Box m='auto' mt='20px' display={{base:'none', lg:'block'}}>
             </Box>
             <Box >

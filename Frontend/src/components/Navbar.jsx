@@ -18,54 +18,43 @@ import {GrUserAdmin} from 'react-icons/gr'
 import AvatarImg from '../Resources/avatar.jpg'
 import CurlyArrow from '../Resources/curlyArrow.png'
 
-export default function Navbar({props={}, handleSearch}){
+let localData = JSON.parse(localStorage.getItem("userData")) || undefined
+export default function Navbar(){
+    let localData = JSON.parse(localStorage.getItem("userData")) || undefined
     const { isOpen, onOpen, onClose } = useDisclosure()
     const btnRef = useRef()
     const toast = useToast()
     const [role, setRole] = useState()
-
+    const [render, setRender] = useState(false)
     useEffect(() => {
-        // axios.get('/api/users/rolecheck').then((res) => {
-        //     console.log(res.data , 'ROLE, NAVBAR')
-        //     setRole(res.data)
-        // })
-        // .catch((e) => {
-        //     console.log(e, 'e TOLE NAVBAR')
-        //     setRole("Buyer")
-        // })
-     }, [])
-  
 
-    // if(props){
-    //     props = JSON.parse(props) || null
-    // }
+    }, [render])
 
     const handleSeller = () => {
-        if(props != ""){
-        }else{
-            toast({
-                title:'You have to Login first',
-                description: "Login OR Create an account first",
-                status: 'warning',
-                duration: 6000,
-                isClosable: true,
-            })
-        }
+        // if(props != ""){
+        // }else{
+        //     toast({
+        //         title:'You have to Login first',
+        //         description: "Login OR Create an account first",
+        //         status: 'warning',
+        //         duration: 6000,
+        //         isClosable: true,
+        //     })
+        // }
+    }
+    
+    const handleLogout = () => {
+        localStorage.removeItem("userData")
+        toast({
+            title: "Logout Successfull",
+            description : "Logged you out successfully",
+            status: "success",
+            duration : 4000,
+            isClosable : true
+        })
+        setRender((prev) => !prev)
     }
 
-    const handleLogout =() => {
-        axios.get('/api/users/logout').then((res) => {
-            console.log(res, 'LOGOUT SUCCESS')
-            toast({
-                title: 'Logout Successfull.',
-                description: "You have logged out successfully.",
-                status: 'info',
-                duration: 9000,
-                isClosable: true,
-              })
-      
-        })
-    }
     return(
         <HStack 
             w='95%' 
@@ -84,54 +73,8 @@ export default function Navbar({props={}, handleSearch}){
             boxShadow='none'>
             
 
-            <Flex w='30%' justifyContent="space-evenly" display={{base:'none', sm:"none", md:"flex" }} >
-                <Menu>
-                    <MenuButton>
-                        <BiUser style={{fontSize:'26px'}}/>
-                    </MenuButton>
-                    <MenuList>
-                        <Link to="/login">
-                            {
-                                props ? 
-                                <MenuItem color='black' command='⌘T' onClick={handleLogout}>
-                                    Logout
-                                </MenuItem>
-                                :
-                                <MenuItem color='black' command='⌘T'>
-                                    Login
-                                </MenuItem>
-                            }
-                        </Link>
-                        <Link to='/becomeseller'>
-                            <MenuItem color='black' command='⌘N'>
-                                Become a Seller
-                            </MenuItem>
-                        </Link>
-                    </MenuList>
-                </Menu>
-
-
-
-                <Tooltip label="Cart">
-                    <Link to="/cart">
-                        <BiCart style={{fontSize:'26px'}}/>
-                    </Link>
-                </Tooltip>
-
-                <Tooltip label="Wishlist">
-                    <Link to="/wishlist">
-                        <AiOutlineHeart style={{fontSize:'26px', color:'yellow'}}/>
-                    </Link>
-                </Tooltip>
-                {
-                    role != "Buyer" && 
-                    <Tooltip label="Admin Panel">
-                        <Link to="/admin">
-                            <GrUserAdmin style={{fontSize:'26px', color:'green'}}/>
-                        </Link>
-                    </Tooltip>
-
-                }
+            <Flex w='30%' justifyContent="flex-start" display={{base:'none', sm:"none", md:"flex" }} pl='20px'>
+                <Link to='/products'><Text _hover={{transform:'scale(1.2)'}} fontFamily="Dancing Script, cursive" transition='.1s linear' color='yellow' fontSize='26px'>Our Collection</Text></Link>
             </Flex>
 
             
@@ -156,13 +99,20 @@ export default function Navbar({props={}, handleSearch}){
                 </Flex>
                 <MenuList color='black'>
                     <MenuGroup title='Profile'>
-                    <MenuItem><Link to='/admin'>My Account</Link></MenuItem>
-                    <MenuItem>Payments </MenuItem>
+                        <Link to='/admin'><MenuItem>My Account</MenuItem></Link>
+                        <Link to='/wishlist'><MenuItem>Wishlist</MenuItem></Link>
+                        <Link to='/cart'><MenuItem>Cart</MenuItem></Link>
+                    </MenuGroup>
+                    <MenuDivider />
+                    <MenuGroup title='Options'>
+                        <MenuItem><Link to='/become-seller'>Become a Merchent</Link></MenuItem>
+                        {
+                            localData != undefined && <MenuItem onClick={() => handleLogout()}>Logout</MenuItem>
+                        }
                     </MenuGroup>
                     <MenuDivider />
                     <MenuGroup title='Help'>
-                    <MenuItem>Docs</MenuItem>
-                    <MenuItem>FAQ</MenuItem>
+                        <MenuItem><a href='https://github.com/aaryansinha16/MohallaMart' target='_blank'>Docs</a></MenuItem>
                     </MenuGroup>
                 </MenuList>
             </Menu>

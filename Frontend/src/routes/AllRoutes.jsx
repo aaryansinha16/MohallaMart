@@ -33,7 +33,7 @@ const AllRoutes = () => {
         } />
         <Route path='/products/:id' element={
           <>
-          <Navbar />
+          {/* <Navbar /> */}
             <SingleProductPage/>
           <Footer />
           </>

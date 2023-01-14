@@ -56,12 +56,15 @@ export default function Products({props}={}) {
         console.log('test1')
     }, [])
     useEffect(() => {
-        dispatch(getWishlistAction('63b326771a3dd7f1ca16731a'))
-        .then((res) => {
-            // console.log(res, 'RESPONSE GET WISHLIST')
-            setWishlist(res.items)
-        })
-        console.log('test2')
+        let localData = JSON.parse(localStorage.getItem("userData")) || undefined
+        if(localData != undefined){
+            dispatch(getWishlistAction(localData._id))
+            .then((res) => {
+                // console.log(res, 'RESPONSE GET WISHLIST')
+                setWishlist(res.items)
+            })
+            console.log('test2')
+        }
     }, [render])
 
     const handleSearch = (query) => {}

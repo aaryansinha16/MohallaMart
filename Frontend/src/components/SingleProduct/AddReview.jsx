@@ -5,17 +5,17 @@ import { BsStarFill } from "react-icons/bs"
 import {GoPlus} from "react-icons/go"
 
 export function AddReview({handleSubmitReview}) {  
-    const OverlayTwo = () => (
-      <ModalOverlay
-        bg='none'
-        backdropFilter='auto'
-        backdropInvert='80%'
-        backdropBlur='2px'
+  const OverlayOne = () => (
+    <ModalOverlay
+      bg='blackAlpha.300'
+      backdropFilter='blur(8px) hue-rotate(90deg)'
+      transition='2s linear'
+      // animation={animation}
       />
     )
   
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const [overlay, setOverlay] = React.useState(<OverlayTwo />)
+    const [overlay, setOverlay] = React.useState(<OverlayOne />)
     const [fillStar , setFillStar] = useState(Number)
     const [rating,setRating] = useState("")
 
@@ -25,6 +25,7 @@ export function AddReview({handleSubmitReview}) {
 
     const submitReview = ()=>{
       handleSubmitReview(rating,fillStar)
+      console.log(rating, fillStar)
       onClose()
     }
     useEffect(()=>{
@@ -34,11 +35,13 @@ export function AddReview({handleSubmitReview}) {
     return (
       <>
         <Button
-          ml='4'
-          colorScheme="blue"
+          m='auto'
+          // ml='4'
+          color='white'
+          colorScheme="yellow"
           marginTop={"30px"}
           onClick={() => {
-            setOverlay(<OverlayTwo />)
+            setOverlay(<OverlayOne />)
             onOpen()
           }}
         >

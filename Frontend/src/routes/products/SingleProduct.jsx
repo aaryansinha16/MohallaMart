@@ -11,11 +11,11 @@ import {
   Tooltip,
   useToast,
   Input,
+  ModalOverlay,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { RadioSizeCard } from "../../components/SingleProduct/RadioCard";
 import { AiOutlineStar } from "react-icons/ai";
 import { SlBag } from "react-icons/sl";
-import TabsSection from "../../components/SingleProduct/Tabs";
 import { BsCart, BsStarFill } from "react-icons/bs";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
@@ -27,6 +27,8 @@ import { postWishlistAction } from "../../redux/wishlist/wishlist.actions";
 import { postCartAction } from "../../redux/cart/cart.actions";
 import { useRef } from "react";
 import { io } from 'socket.io-client'
+import Login from "../Login";
+import Reviews from "../../components/SingleProduct/Reviews";
 
 const Socket = io.connect('http://localhost:3000')
 const SingleProductPage = ({props}) => {
@@ -39,17 +41,26 @@ const SingleProductPage = ({props}) => {
   const params = useParams()
   const dispatch = useDispatch()
   const toast = useToast()
+
+  const OverlayOne = () => (
+    <ModalOverlay
+    bg='blackAlpha.300'
+    backdropFilter='blur(10px) hue-rotate(90deg)'
+    />
+  )
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [overlay, setOverlay] = useState(<OverlayOne />)
   
   useEffect(() => {
     Socket.emit("new review", {review : "", productId: params.id})
   }, [])
 
   useEffect(() => {
-    // dispatch(getSingleProduct(params.id))
-    // .then((res) => {
-      //   console.log(res, 'RESPONSE FOR SINGLE PRODUCT GET')
-      //   setData(res.prod)
-      // })
+    dispatch(getSingleProduct(params.id))
+    .then((res) => {
+        console.log(res, 'RESPONSE FOR SINGLE PRODUCT GET')
+        setData(res.prod)
+      })
       
       Socket.on("new review", (d) => {
         setReviews(d)
@@ -57,21 +68,39 @@ const SingleProductPage = ({props}) => {
       })
     }, [])
     
-  const handleSubmitReview=(data,fillStar)=>{
+  const handleSubmitReview=(review, rating)=>{
     // console.log(reviewRef.current.value)
-    if(reviewRef.current.value != ""){
-      Socket.emit("new review", {
-        userId: '63b326771a3dd7f1ca16731a',
-        productId: params.id,
-        review: reviewRef.current.value,
-        rating: 4.5
-      })
-      alert("Review sent")
+    let localData = JSON.parse(localStorage.getItem("userData")) || undefined
+    if(localData != undefined){
+      if(review != ""){
+        console.log('TESTING SOCKET')
+        Socket.emit("new review", {
+          userId: localData._id,
+          productId: params.id,
+          review: review,
+          rating: rating
+        })
+        toast({
+          title: "Review added",
+          description : "Thanks for adding feedback!",
+          status: 'success',
+          duration : 4000,
+          isClosable : true
+        })
+      }
+      // console.log("TRIDAFD", localData)
+    }
+    else{
+      onOpen()
+      setOverlay(<OverlayOne />)
     }
   }
     
-    const handleWishlist = () => {
-      dispatch(postWishlistAction('63b326771a3dd7f1ca16731a', params.id))
+  const handleWishlist = () => {
+    let localData = JSON.parse(localStorage.getItem("userData")) || undefined
+
+    if(localData != undefined){
+      dispatch(postWishlistAction(localData._id, params.id))
       .then((res) => {
         console.log(res, 'WISHLIST RESPONSE')
         toast({
@@ -82,64 +111,101 @@ const SingleProductPage = ({props}) => {
             duration: 5000,
             isClosable: true,
         })
-    })
+      })
+    }else{
+      onOpen()
+      setOverlay(<OverlayOne />)
+    }
   }
 
   const handleAddToCart = () => {
-    dispatch((postCartAction('63b326771a3dd7f1ca16731a',params.id)))
-    .then((res) => {
-        console.log(res,'RESPONSE POST CART')
-        toast({
-            title: res.message,
-            variant: 'subtle',
-            description: res.message,
-            status: res.message.split(' ').includes("added") ? 'success' : 'info',
-            duration: 5000,
-            isClosable: true,
-        })
-    })
+    let localData = JSON.parse(localStorage.getItem("userData")) || undefined
+
+    if(localData != undefined){
+      dispatch((postCartAction(localData._id,params.id)))
+      .then((res) => {
+          console.log(res,'RESPONSE POST CART')
+          toast({
+              title: res.message,
+              variant: 'subtle',
+              description: res.message,
+              status: res.message.split(' ').includes("added") ? 'success' : 'info',
+              duration: 5000,
+              isClosable: true,
+          })
+      })
+    }else{
+      onOpen()
+      setOverlay(<OverlayOne/>)
+    }
+    console.log("TERRIGER", localData)
   }
 
   const deleteReview =()=>{}
 
+  var sum5 = 0
+  var sum4 = 0
+  var sum3 = 0
+  var sum2 = 0
+  var sum1 = 0
+  for(var i = 0; i<reviews?.reviews.length; i++){
+    let el = reviews.reviews[i].rating
+    if(el == 1) sum1++
+    else if(el == 2) sum2++
+    else if(el == 3) sum3++
+    else if(el == 4) sum4++
+    else if(el == 5) sum5++
+  }
+
   return (
-    <>
-      <SimpleGrid
-        columns={[1, 1, 2]}
+    <Box className="home">
+      <Navbar />
+      <Flex
         maxWidth="90%"
         margin="auto"
+        color='white'
+        mt='20px'
+        justifyContent='space-between'
+        alignItems='flex-start'
+        // h='1700px'
+        flexDir={{base:'column', md:'row'}}
       >
-        <Box
-          w="100%"
-          boxShadow={"rgba(0, 0, 0, 0.24) 0px 3px 8px"}
+        <Image
+          w={{base:'70%',md:"45%"}}
+          m={{base:'auto', md:'0'}}
+          position={{base: 'static', md:'sticky'}}
+          top='100px'
           borderRadius="20px"
-          margin="auto"
-          display={"flex"}
-          justifyContent="center"
-        >
-          <Image
-            borderRadius="20px"
-            w="90%"
-            src={data?.src}
-          />
-        </Box>
+          boxShadow='2xl'
+          src={data?.src}
+        />
 
         <Box p="30px">
-          <Text fontSize="1xl" color={"#2a977d"} fontWeight="500">
+          <Text fontSize="1xl" color='yellow' fontWeight="500">
             Mohalla Mart
           </Text>
-          <Text fontSize="3xl" color={"black"} fontWeight="500">
+          <Text fontSize="3xl" fontWeight="500">
             {data?.title}
           </Text>
           <Box display="flex" mt="2" alignItems="center" gap="5px">
-            {Array(5)
-              .fill("")
-              .map((_, i) => 
-              (
-                <BsStarFill fontSize={"17px"} key={i}  color={i < 4 ? "orange": "grey"} />
-              ))}
+            {
+              reviews?.avgRating == undefined ?
+              Array(5)
+                .fill("")
+                .map((_, i) => 
+                (
+                  <BsStarFill fontSize={"17px"} key={i}  color={i < data?.ratings ? "orange": "grey"} />
+                ))
+                :  
+              Array(5)
+                .fill("")
+                .map((_, i) => 
+                (
+                  <BsStarFill fontSize={"17px"} key={i}  color={i < reviews.avgRating ? "orange": "grey"} />
+                ))
+            }
           </Box>
-          <Text fontSize="3xl" color={"black"} fontWeight="500">$ {data?.price}</Text>
+          <Text fontSize="3xl" fontWeight="500">$ {data?.price}</Text>
           <Box marginTop={"20px"}>
             <Box marginTop={"20px"}>
               <Text fontSize={"1xl"} fontWeight="500">
@@ -160,7 +226,7 @@ const SingleProductPage = ({props}) => {
               >
                 Choose Size
               </Text>
-              <RadioSizeCard />
+              {/* <RadioSizeCard /> */}
               <Text fontSize={"1xl"} fontWeight="500" marginTop={"30px"}>
                 Choose Color
               </Text>
@@ -175,6 +241,7 @@ const SingleProductPage = ({props}) => {
                   "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px"
                 }
                 alignItems={"center"}
+                bg='white'
               >
                 <Button borderRadius={"50%"} colorScheme="blue" ></Button>
                 <Button borderRadius={"50%"} bg="black"></Button>
@@ -185,15 +252,15 @@ const SingleProductPage = ({props}) => {
               <HStack w="80%" m="auto" marginTop={"30px"} gap="10px">
                 <Button
                   onClick={handleAddToCart}
-                 position='sticky' bottom='10px' w="100%" color="white" bg={"#2a977d"}>
+                 position='sticky' bottom='10px' w="100%" color="white" bg={'green.400'}>
                   {" "}
                   Buy Now
                 </Button>
                 <Button
                   w="100%"
-                  colorScheme="#2a977d"
-                  variant="outline"
-                  color={"#2a977d"}
+                  colorScheme="whiteAlpha"
+                  variant="solid"
+                  // color={"#2a977d"}
                   onClick={handleWishlist}
                 >
                   Add To Wishlist <SlBag />
@@ -201,19 +268,18 @@ const SingleProductPage = ({props}) => {
               </HStack>
             </Box>
           </Box>
+          <Reviews reviews={reviews} sum5={sum5} sum4={sum4} sum3={sum3} sum2={sum2} sum1={sum1} data={data} handleSubmitReview={handleSubmitReview}/>
         </Box>
-      </SimpleGrid>
-      <Box position='fixed' top='90%' right='4%'>
+        <Login isOpen={isOpen} onClose={onClose} /> 
+      </Flex>
+      <Box onClick={handleAddToCart} position='fixed' top='90%' right='4%' zIndex='1000' bg='#2ebaa4' p={3} borderRadius='50%' transition='.2s linear' _hover={{transform:'scale(1.4)'}}>
         <Tooltip placement='top' hasArrow label='Buy Now' >
-          <Box  zIndex='99999'>
-            <BsCart style={{fontSize:'30px', }}/>
+          <Box>
+            <BsCart style={{fontSize:'30px', color:'white'}}/>
           </Box>
         </Tooltip>
       </Box>
-      <Input type='text' placeholder='test' ref={reviewRef} />
-      <Button onClick={handleSubmitReview}>Text</Button>
-        <TabsSection handleSubmitReview={handleSubmitReview} loggedIn={loggedIn} showReviews={reviews} deleteReview={deleteReview}/>
-    </>
+    </Box>
   );
 };
 

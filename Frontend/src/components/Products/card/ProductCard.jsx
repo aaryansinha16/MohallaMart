@@ -12,7 +12,9 @@ import {
     IconButton,
     useToast,
     Text,
-    Link
+    Link,
+    ModalOverlay,
+    useDisclosure
   } from '@chakra-ui/react';
 import { useState } from 'react';
 // import {Link} from 'react-router-dom';
@@ -22,6 +24,7 @@ import { FiShoppingCart } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
 import { postCartAction } from '../../../redux/cart/cart.actions';
 import { postWishlistAction } from '../../../redux/wishlist/wishlist.actions';
+import Login from '../../../routes/Login';
   
   
   function Rating({ rating, numReviews }) {
@@ -52,6 +55,7 @@ import { postWishlistAction } from '../../../redux/wishlist/wishlist.actions';
     );
   }
 
+
   
   function ProductCard({
     _id,
@@ -69,16 +73,54 @@ import { postWishlistAction } from '../../../redux/wishlist/wishlist.actions';
     setRender,
     productId
   }) {
-
-    title= title?.slice(0,25)
-    const [styles, setStyles] = useState(false)
-    const dispatch = useDispatch()
-    const toast = useToast()
-
-    const handleWishlist = (productId) => {
-      dispatch(postWishlistAction('63b326771a3dd7f1ca16731a', productId))
+    
+  title= title?.slice(0,25)
+  const [styles, setStyles] = useState(false)
+  const dispatch = useDispatch()
+  const toast = useToast()
+  
+  const OverlayOne = () => (
+    <ModalOverlay
+    bg='blackAlpha.300'
+    backdropFilter='blur(10px) hue-rotate(90deg)'
+    />
+  )
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [overlay, setOverlay] = useState(<OverlayOne />)
+  
+  const handleWishlist = (productId) => {
+    let localData = JSON.parse(localStorage.getItem("userData")) || undefined
+    if(localData == undefined){
+      onOpen()
+      setOverlay(<OverlayOne/>)
+    }
+    else{
+      dispatch(postWishlistAction(localData._id , productId))
       .then((res) => {
-          console.log(res, 'WISHLIST RESPONSE')
+        console.log(res, 'WISHLIST RESPONSE')
+        setRender((prev) => !prev)
+        toast({
+          title: res.message,
+          variant: 'subtle',
+            description: res.message,
+            status: res.message.split(' ').includes("added") ? 'success' : 'info',
+            duration: 5000,
+            isClosable: true,
+          })
+        })
+      }
+  }
+      
+  const handleAddToCart = (productId) => {
+    let localData = JSON.parse(localStorage.getItem("userData")) || undefined
+    console.log(localData,'LOCALDATA')
+    if(localData == undefined){
+      onOpen()
+      setOverlay(<OverlayOne/>)
+    }else{
+      dispatch((postCartAction(localData._id , productId)))
+      .then((res) => {
+          console.log(res,'RESPONSE POST CART')
           setRender((prev) => !prev)
           toast({
               title: res.message,
@@ -90,22 +132,7 @@ import { postWishlistAction } from '../../../redux/wishlist/wishlist.actions';
           })
       })
     }
-    
-    const handleAddToCart = (productId) => {
-        dispatch((postCartAction('63b326771a3dd7f1ca16731a',productId)))
-        .then((res) => {
-            console.log(res,'RESPONSE POST CART')
-            setRender((prev) => !prev)
-            toast({
-                title: res.message,
-                variant: 'subtle',
-                description: res.message,
-                status: res.message.split(' ').includes("added") ? 'success' : 'info',
-                duration: 5000,
-                isClosable: true,
-            })
-        })
-    }
+  }
 
     return (
       <Flex alignItems="center" justifyContent="center" bgColor='rgba(255, 255, 255, .25)' _hover={{bgColor:'transparent', boxShadow:'none'}} style={{backdropFilter: 'blur(7px)'}}
@@ -194,6 +221,7 @@ import { postWishlistAction } from '../../../redux/wishlist/wishlist.actions';
               </Box>
             </Flex>
           </Box>
+          <Login isOpen={isOpen} onClose={onClose}/>
         </Box>
       </Flex>
     );

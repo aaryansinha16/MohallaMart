@@ -43,7 +43,7 @@ const Explore = () => {
         borderRadius='100px 100px 0 0'
         bg='#00957b'
         mt='140px'
-        pb='100px'
+        // pb='100px'
     >
         <a href='#explore' className='test'>
         <Box
@@ -185,7 +185,16 @@ const Explore = () => {
                 {/* <Text lineHeight='70px' >TRY NOW</Text> */}
             </Flex>
         </Box>
-
+        <Box
+            w='100%'
+            h='70px'
+            bg='#00957b'
+            // mt='100px'
+            position='relative'
+            top='70px'
+            // border='1px solid red'
+            borderRadius='0 0 100px 100px'
+        ></Box>
     </Box>
   )
 }

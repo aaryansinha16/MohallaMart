@@ -14,6 +14,7 @@ const OrderRouter = require("./orders/orders.router")
 const SellerRouter = require('./seller/seller.router')
 const ReviewRouter = require('./reviews/reviews.router')
 const RazorpayRouter = require("./razorpay/razorpay")
+const productModel = require('./product/product.model')
 
 const app = express()
 app.use(express.json())
@@ -46,15 +47,26 @@ io.on("connection", (conn) => {
 
     conn.on('new review', async ({rating, review, userId, productId}) => {
         if(review == ""){
-            let reviews = await reviewModel.find({productId})
-            io.emit("new review", reviews)
+            let reviews = await reviewModel.find({productId}).populate("userId")
+            io.emit("new review", {reviews, avgRating : undefined})
             return
         }
         let data = await reviewModel.create({rating, review, userId, productId})
+
+        let allRatings = await reviewModel.find({productId})
+        let avgRating = 0
+        var sum = 0
+        for(var i = 0; i<allRatings.length; i++){
+            sum += allRatings[i].rating
+        }
+        // console.log(sum , allRatings.length, sum/allRatings.length)
+        avgRating = sum / allRatings.length
+        let test = await productModel.findByIdAndUpdate(productId, {ratings: Math.floor(avgRating)}, {new : true})
+        // console.log('AVERAGE',test, avgRating, sum )
         // console.log("Not happening")
         // console.log('DATA FROM FRONTEND',rating, review, userId, productId)
-        let reviews = await reviewModel.find({productId})
-        io.emit("new review", reviews)
+        let reviews = await reviewModel.find({productId}).populate("userId")
+        io.emit("new review", {reviews, avgRating})
     })
 
     conn.on("disconnect", () => {

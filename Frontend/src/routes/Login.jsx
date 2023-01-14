@@ -98,7 +98,7 @@ export default function Login({isOpen, onClose}){
               boxShadow='2xl'
               borderRadius='40px'
               px={3}
-              bg='#fdc92e'
+              bg='#ffe058'
               color='#816101'
               >
               <ModalHeader fontSize='26px' fontFamily='mono'>Login</ModalHeader>

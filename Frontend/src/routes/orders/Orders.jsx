@@ -13,11 +13,22 @@ export default function Orders() {
     let toast = useToast()
 
     useEffect(()=>{
-        dispatch(getOrderAction('63b326771a3dd7f1ca16731a'))
-        .then((res) => {
-            console.log('RESPONSE FOR GET ORDERS', res)
-            setOrdersData(res.items)
-        })
+        let localData = JSON.parse(localStorage.getItem("userData")) || undefined
+        if(localData != undefined){
+            dispatch(getOrderAction(localData._id))
+            .then((res) => {
+                console.log('RESPONSE FOR GET ORDERS', res)
+                setOrdersData(res.items)
+            })
+        }else{
+            toast({
+                title : "Login Or Signup first",
+                description : "You need to login to check orders",
+                status: 'warning',
+                duration : 6000,
+                isClosable : true
+            })
+        }
     },[])
 
 

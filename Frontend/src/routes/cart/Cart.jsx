@@ -9,6 +9,7 @@ import {
   HStack,
   Stack,
   useColorModeValue as mode,
+  useDisclosure,
   useToast,
 } from '@chakra-ui/react'
 import axios from "axios";
@@ -25,6 +26,7 @@ import { deleteCartAction, getCartAction } from "../../redux/cart/cart.actions";
 import {store} from '../../redux/store'
 import Logo from '../../Resources/logo-circle.png'
 import { postOrderAction } from "../../redux/order/order.actions";
+import Login from "../Login";
 
 
 function Cart() {
@@ -39,22 +41,33 @@ function Cart() {
   // const forceUpdate = () => setRender((prev) => prev + 1)
   // store.subscribe(forceUpdate)
   // let cartItems = store.getState().cart.payload.items
+  const OverlayOne = () => (
+    <ModalOverlay
+    bg='blackAlpha.300'
+    backdropFilter='blur(10px) hue-rotate(90deg)'
+    />
+  )
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [overlay, setOverlay] = useState(<OverlayOne />)
   
   useEffect(() => {
-    dispatch(getCartAction('63b326771a3dd7f1ca16731a'))
-    .then((res) => {
-      console.log(res,'RESPONSE GET CART')
-      setCartData(res.items)
-      let arr = []
-      for(var i = 0; i<res.items.length; i++){
-        arr.push({
-          productId: res.items[i].productId._id,
-          quantity: res.items[i].quantity,
-          price : res.items[i].productId.price
-        })
-        setProducts(arr)
-      }
-    })
+    let localData = JSON.parse(localStorage.getItem("userData")) || undefined
+    if(localData != undefined){
+      dispatch(getCartAction(localData._id))
+      .then((res) => {
+        console.log(res,'RESPONSE GET CART')
+        setCartData(res.items)
+        let arr = []
+        for(var i = 0; i<res.items.length; i++){
+          arr.push({
+            productId: res.items[i].productId._id,
+            quantity: res.items[i].quantity,
+            price : res.items[i].productId.price
+          })
+          setProducts(arr)
+        }
+      })
+    }
     console.log('render', render)
   }, [render])
 
@@ -65,21 +78,26 @@ function Cart() {
     setTotalCost(total)
   }, [prodRender])
 
-  function test(){
-    console.log(products)
-  }
   
   const deleteItem = (productId) => {
-    dispatch(deleteCartAction('63b326771a3dd7f1ca16731a', productId))
-    .then((res) => {
-      console.log(res, 'RESPONSE CART DELETE')
-    })
+    let localData = JSON.parse(localStorage.getItem("userData")) || undefined
+
+    if(localData == undefined){
+      onOpen()
+      setOverlay(<OverlayOne />)
+    }else{
+      dispatch(deleteCartAction(localData._id, productId))
+      .then((res) => {
+        console.log(res, 'RESPONSE CART DELETE')
+      })
+    }
     setRender((prev) => prev + 1)
   }
 
 
 // ! RAZORPAY CODE
   const makePayment = async (name, email, contact, amount) => {
+    let localData = JSON.parse(localStorage.getItem("userData")) || undefined
     const res = await initializeRazorpay();
 
     if (!res) {
@@ -111,7 +129,7 @@ function Cart() {
           isClosable: true,
         })
 
-      dispatch(postOrderAction('63b326771a3dd7f1ca16731a',totalCost, products, response.razorpay_order_id))
+      dispatch(postOrderAction(localData._id,totalCost, products, response.razorpay_order_id))
       .then((res) => {
         console.log(res, 'POST ORDER')
       })
@@ -175,13 +193,13 @@ function Cart() {
               }
             </Stack>
           </Stack>
-              <Button onClick={test}>test</Button>
           <Flex direction="column" align="center" flex="1">
             <CartOrderSummary totalCost={totalCost} makePayment={makePayment}/>
             <HStack mt="6" fontWeight="semibold">
               <p>or</p>
               <Link to="/products" style={{color:'blue.500'}}>Continue shopping</Link>
             </HStack>
+            <Login isOpen={isOpen} onClose={onClose}/>
           </Flex>
         </Stack>
       </Box>
