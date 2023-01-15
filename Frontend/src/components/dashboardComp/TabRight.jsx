@@ -1,11 +1,14 @@
 import { CalendarIcon } from '@chakra-ui/icons'
-import { Badge, Button, Divider, Flex, HStack, Text, VStack } from '@chakra-ui/react'
+import { Badge, Button, Divider, Flex, HStack, Image, Text, VStack } from '@chakra-ui/react'
 import React, { memo } from 'react'
 import { BsFillSunFill } from 'react-icons/bs'
 import { TiWeatherCloudy } from 'react-icons/ti'
+import Profile from '../../Resources/avatar.jpg'
 
 const TabRight = ({tab}) => {
     console.log('right tab render')
+    let date = new Date().toDateString().replace(' ', ',')
+    let localData = JSON.parse(localStorage.getItem("userData")) || undefined
   return (
     <VStack
         boxShadow='2xl'
@@ -21,7 +24,7 @@ const TabRight = ({tab}) => {
         >
             <HStack w={{base:'80%', xl:'100%'}} justifyContent='space-between'>
                 <VStack alignItems='flex-start' spacing={0} lineHeight='26px'>
-                    <Text fontSize='20px' fontWeight='500'>Sun</Text>
+                    <Text fontSize='20px' fontWeight='500'>{date}</Text>
                     <Text>Menu</Text>
                 </VStack>
 
@@ -30,15 +33,11 @@ const TabRight = ({tab}) => {
             <Divider orientation='horizontal' w='100%' borderColor='gray.400' borderWidth='0.5px' bg='gray.400' opacity='0.3'/>
 
             <Flex alignItems='center' justifyContent='center' gap={{base:'5px', xl:'15px'}} w='100%'  bg='#19283f' color='white' p={3} borderRadius='25px'>
-                <BsFillSunFill color='orange' fontSize='36px' style={{ borderRadius:'50%'}}/>
-                <VStack spacing={0} alignItems='flex-start' lineHeight='25px'>
-                    <Text as={Flex} gap="10px" fontSize='18px' fontWeight='500' alignItems='center'>20 UVI <Badge fontSize='10px'  colorScheme='yellow'>Moderate</Badge></Text>
-                    <Text fontSize='12px'>Moderate risk from UV rays</Text>
-                </VStack>
+                <Image src={Profile} borderRadius='full'/>
             </Flex>
 
             <VStack w='100%' alignItems='flex-end' pt='15px'>
-                    <Text w='100%' textAlign='center' fontSize={{base:'18px',xl:'26px'}} fontWeight='500'>Weather Prediction</Text>
+                    <Text w='100%' textAlign='center' fontSize={{base:'18px',xl:'26px'}} fontWeight='500'>{localData != undefined ? localData.fName + " " + localData.lName : "Detective User"}</Text>
                     <VStack w='100%' pt='10px' pb='20px'>
                             <HStack alignItems='center' justifyContent='space-between' w='100%' bg='white' borderRadius='25px' p={3}>
                                 <Flex alignItems='center' justifyContent='center'  gap='15px' w='fit-content' color='black'  >

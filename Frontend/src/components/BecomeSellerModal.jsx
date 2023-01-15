@@ -76,6 +76,7 @@ export default function BecomeSeller({isOpen, onClose, drMod}){
               becomeSeller(localData._id, storeRef.current.value, localData)
               .then((res) => {
                 console.log(res, 'RESPONSE ON BECOMING SLLER')
+                localStorage.setItem("userData", JSON.stringify(res.user))
                 toast({
                     title: 'Store Created!',
                     description: "Congrats!, your store is live!!",

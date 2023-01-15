@@ -156,7 +156,7 @@ export default function Login({isOpen, onClose}){
                       <FormLabel>First Name: </FormLabel>
                       <Input 
                         placeholder="John" 
-                        name="text" 
+                        name="fName" 
                         onChange={handleChange}
                         bg='green.300'
                         colorScheme='yellow'
@@ -171,7 +171,7 @@ export default function Login({isOpen, onClose}){
                       <FormLabel>Last Name: </FormLabel>
                       <Input 
                         placeholder="Doe" 
-                        name="text" 
+                        name="lName" 
                         onChange={handleChange}
                         bg='green.300'
                         colorScheme='yellow'
@@ -190,7 +190,7 @@ export default function Login({isOpen, onClose}){
                       <FormLabel>Username: </FormLabel>
                       <Input 
                         placeholder="abc1221" 
-                        name="text" 
+                        name="username" 
                         onChange={handleChange}
                         bg='green.300'
                         colorScheme='yellow'

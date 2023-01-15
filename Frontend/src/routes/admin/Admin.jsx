@@ -3,7 +3,7 @@ import { Box, useToast } from '@chakra-ui/react'
 import React, {useState, useEffect} from 'react'
 import DeskDash from '../../components/dashboardComp/DeskDash'
 
-import MainDash from '../../components/dashboardComp/mainDash/MainDash'
+// import MainDash from '../../components/dashboardComp/mainDash/MainDash'
 import RespDash from '../../components/dashboardComp/RespDash'
 
 const Admin = ({props}) => {

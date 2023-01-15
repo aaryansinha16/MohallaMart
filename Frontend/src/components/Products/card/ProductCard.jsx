@@ -12,11 +12,11 @@ import {
     IconButton,
     useToast,
     Text,
-    Link,
     ModalOverlay,
-    useDisclosure
+    useDisclosure,
   } from '@chakra-ui/react';
 import { useState } from 'react';
+import {Link} from 'react-router-dom'
 // import {Link} from 'react-router-dom';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { BsStar, BsStarFill, BsStarHalf } from 'react-icons/bs';
@@ -29,7 +29,7 @@ import Login from '../../../routes/Login';
   
   function Rating({ rating, numReviews }) {
     return (
-      <Flex alignItems="center">
+      <Flex alignItems="center" color='orange' pl={4}>
         {Array(5)
           .fill('')
           .map((_, i) => {
@@ -74,7 +74,7 @@ import Login from '../../../routes/Login';
     productId
   }) {
     
-  title= title?.slice(0,25)
+  title= title?.slice(0,15)
   const [styles, setStyles] = useState(false)
   const dispatch = useDispatch()
   const toast = useToast()
@@ -135,35 +135,34 @@ import Login from '../../../routes/Login';
   }
 
     return (
-      <Flex alignItems="center" justifyContent="center" bgColor='rgba(255, 255, 255, .25)' _hover={{bgColor:'transparent', boxShadow:'none'}} style={{backdropFilter: 'blur(7px)'}}
-         shadow='lg' rounded='xl'
-      >
+      <Flex
+        bg="transparent"
+        // p={50}
+        w="full"
+        alignItems="center"
+        justifyContent="center"
+        >
         <Box
-          maxW="sm"
-          // h={{base:'auto', lg:'500px'}}
-          >
-  
-          <Link href={`/products/${_id}`}>
-          <Image
-            mixBlendMode='multiply'
-            src={src}
-            alt={`Picture of ${title}...`}
-            roundedTop="lg"
-            />
-          </Link>
-          {
-            currPage == 'wishlist' ?
-              <Tooltip
-              label="Remove"
-              bg="white"
-              placement={'bottom'}
-              color={'gray.800'}
-              fontSize={'0.8em'}>
-                <DeleteIcon color='red' cursor='pointer' position='absolute' top='3%' left="87%" background='white' fontSize='26px'  padding="5px" borderRadius='13px'/>
-              </Tooltip>
-              :
-              <Tooltip
-              label="Add to Favourite"
+          maxW="xs"
+          w='100%'
+          mx="auto"
+          bg="white"
+          shadow="lg"
+          rounded="lg"
+        >
+          <Box px={4} py={2} as={Flex} justifyContent='space-between' alignItems='center'>
+            <Link to={`/products/${_id}`}>
+            <chakra.h1
+              color="gray.800"
+              fontWeight="bold"
+              fontSize="xl"
+              textTransform="uppercase"
+            >
+              {title}...
+            </chakra.h1>
+            </Link>
+            <Tooltip
+              label={isWishlist ? "Remove from wishlist" :"Add to Favourite"}
               bg="white"
               placement={'bottom'}
               color={'gray.800'}
@@ -171,7 +170,13 @@ import Login from '../../../routes/Login';
                 <Box onClick={() => {
                   handleWishlist(_id)
                   setStyles(!styles)
-                }} position='absolute' top='3%' left="87%" background='white'  fontSize='20px'  padding="5px" borderRadius='13px'
+                }} 
+                w='fit-content'
+                // position='relative' 
+                // top='-40px' 
+                // left="87%" 
+                background='white'  
+                fontSize='20px'  padding="5px" borderRadius='13px'
                 _hover={{bg:'pink'}}>
                   {
                     isWishlist == true ? 
@@ -181,49 +186,55 @@ import Login from '../../../routes/Login';
                   }
                 </Box>
               </Tooltip>
-
-          }
-
-          <Box p="6">
-            <Box display="flex" alignItems="baseline">
-              {available && (
-                <Badge rounded="full" px="2" fontSize="0.8em" colorScheme="red">
-                  New
-                </Badge>
-              )}
-            </Box>
-            <Flex mt="1" justifyContent="space-between" alignContent="center">
-              <Box
-                fontSize="2xl"
-                fontWeight="semibold"
-                as="h4"
-                lineHeight="tight"
-                >
-                {title}...
-              </Box>
-              <Tooltip
-                label="Add to cart"
-                bg="white"
-                placement={'top'}
-                color={'gray.800'}
-                fontSize={'0.8em'}>
-                <IconButton onClick={() => handleAddToCart(_id)} aria-label='add-to-cart' color='#816101' bg='#fdc92e' variant='solid' size='lg' colorScheme='yellow' icon={<FiShoppingCart />}/>
-              </Tooltip>
-            </Flex>
-  
-            <Flex justifyContent="space-between" alignContent="center">
-              <Rating rating={ratings} numReviews={quantity} />
-              <Box fontSize="2xl" color={useColorModeValue('gray.800', 'white')}>
-                <Box as="span" color={'gray.600'} fontSize="lg">
-                  $
-                </Box>
-                {price}.00
-              </Box>
-            </Flex>
           </Box>
-          <Login isOpen={isOpen} onClose={onClose}/>
+
+          <Rating rating={ratings} numReviews={quantity} />
+          <Link to={`/products/${_id}`} >
+          <Image
+            h={48}
+            w="full"
+            fit="cover"
+            mt={2}
+            src={src}
+            alt="NIKE AIR"
+            boxShadow='2xl'
+          />
+          </Link>
+
+          <Flex
+            alignItems="center"
+            justifyContent="space-between"
+            px={4}
+            py={2}
+            bg="gray.900"
+            roundedBottom="lg"
+          >
+            <chakra.h1 color="white" fontWeight="bold" fontSize="lg">
+              {price}$
+            </chakra.h1>
+            <chakra.button
+              px={2}
+              py={1}
+              bg="white"
+              fontSize="xs"
+              color="gray.900"
+              fontWeight="bold"
+              rounded="lg"
+              textTransform="uppercase"
+              _hover={{
+                bg: "gray.200",
+              }}
+              _focus={{
+                bg: "gray.400",
+              }}
+              onClick={() => handleAddToCart(_id)}
+            >
+              Add to cart
+            </chakra.button>
+            <Login isOpen={isOpen} onClose={onClose}/>
+          </Flex>
         </Box>
-      </Flex>
+        </Flex>
     );
   }
   

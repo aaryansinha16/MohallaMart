@@ -44,12 +44,16 @@ app.post("/become", async(req,res) => {
 
         if(user.role == "Buyer"){
             let store = await sellerModel.create({userId, storeName})
+            let updatedUser = await userModel.findByIdAndUpdate(userId, {role: "Seller"}, {new : true})
             return res.send({
                 message: "Store created",
-                details: store
+                details: store,
+                user : updatedUser
             })
         }else if(user.role == "Seller"){
-
+            return res.send({
+                message: "You'r already a seller bro"
+            })
         }
 
     }catch(e){
