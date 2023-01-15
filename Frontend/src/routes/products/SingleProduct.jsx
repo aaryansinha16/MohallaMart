@@ -30,7 +30,7 @@ import { io } from 'socket.io-client'
 import Login from "../Login";
 import Reviews from "../../components/SingleProduct/Reviews";
 
-const Socket = io.connect('http://localhost:3000')
+const Socket = io.connect('https://helpful-tan-cricket.cyclic.app/')
 const SingleProductPage = ({props}) => {
   const [data, setData] = useState()
   const [reviews,setReviews] = useState()
