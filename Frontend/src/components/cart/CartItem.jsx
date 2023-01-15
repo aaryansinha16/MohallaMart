@@ -11,13 +11,15 @@ const QuantitySelect = (props) => {
       value={props.value}
       maxW="64px"
       aria-label="Select quantity"
-      focusBorderColor={useColorModeValue('blue.500', 'blue.200')}
+      // focusBorderColor={useColorModeValue('blue.500', 'blue.200')}
+      bg='green.300'
+      color='white'
       {...props}
     >
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
+      <option value="1" style={{background:'orange', color:'white'}}>1</option>
+      <option value="2" style={{background:'orange', color:'white'}}>2</option>
+      <option value="3" style={{background:'orange', color:'white'}}>3</option>
+      <option value="4" style={{background:'orange', color:'white'}}>4</option>
     </Select>
   )
 }
@@ -32,10 +34,10 @@ export const CartItem = (props, {setProducts, products}) => {
 
   return (
     <>
-    <Flex direction={{ base: 'column', md: 'row' }} justify="space-between" align="center" boxShadow='lg' px={4} py={5} rounded='2xl'>
+    <Flex color='white' bg='#fdc92e' direction={{ base: 'column', md: 'row' }} justify="space-between" align="center" boxShadow='lg' px={2} py={3} rounded='2xl'>
      <CartProductMeta
         name={productId.title}
-        description={"Hello world"}
+        // description={"Hello world"}
         image={productId.src}
         // isGiftWrapping={isGiftWrapping}
       />
@@ -43,7 +45,7 @@ export const CartItem = (props, {setProducts, products}) => {
      {/* Desktop */}
       <Flex width="full" justify="space-between" display={{ base: 'none', md: 'flex' }}>
         <QuantitySelect
-          value={productId.quantity}
+          value={productId?.quantity}
           onChange={(e) => {
             onChangeQuantity?.(+e.currentTarget.value)
           }}
@@ -64,7 +66,7 @@ export const CartItem = (props, {setProducts, products}) => {
           Delete
         </Link>
         <QuantitySelect
-          value={props.products.quantity}
+          value={props?.products?.quantity}
           onChange={(e) => {
             onChangeQuantity?.(+e.currentTarget.value)
           }}

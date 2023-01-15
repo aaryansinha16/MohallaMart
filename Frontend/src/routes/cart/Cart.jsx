@@ -13,7 +13,7 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import axios from "axios";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import React, { Component, useContext, useEffect, useRef } from "react";
 import { useState } from "react";
 import { CartItem } from "../../components/cart/CartItem";
@@ -37,6 +37,7 @@ function Cart() {
   const dispatch = useDispatch()
   const [products, setProducts] = useState([])
   const [prodRender, setProdRender] = useState(false)
+  const navigate = useNavigate()
 
   // const forceUpdate = () => setRender((prev) => prev + 1)
   // store.subscribe(forceUpdate)
@@ -97,6 +98,14 @@ function Cart() {
 
 // ! RAZORPAY CODE
   const makePayment = async (name, email, contact, amount) => {
+    toast({
+      title:'Payment starting',
+      description:'Please wait while we process your order',
+      duration: 5000,
+      isClosable:true,
+      status:'info'
+    })
+    console.log("name:", name, "email:", email, 'contact:', contact, 'amount:', amount)
     let localData = JSON.parse(localStorage.getItem("userData")) || undefined
     const res = await initializeRazorpay();
 
@@ -143,6 +152,7 @@ function Cart() {
 
     const paymentObject = new window.Razorpay(options);
     paymentObject.open();
+    navigate('/orders')
   };
   
   const initializeRazorpay = () => {
@@ -163,7 +173,8 @@ function Cart() {
   };
 
   return (
-    <>
+    <Box className="home">
+        <Navbar />
         <Box
         maxW={{ base: '3xl', lg: '7xl' }}
         mx="auto"
@@ -171,6 +182,10 @@ function Cart() {
         py={{ base: '6', md: '8', lg: '12' }}
         mb={8}
         mt={5}
+        color='white'
+        
+        borderRadius='100px 100px 100px 100px'
+        bg='#00957b'
       >
         <Stack
           direction={{ base: 'column', lg: 'row' }}
@@ -193,7 +208,7 @@ function Cart() {
               }
             </Stack>
           </Stack>
-          <Flex direction="column" align="center" flex="1">
+          <Flex direction="column" align="center" flex="1" position='sticky' top='130px'>
             <CartOrderSummary totalCost={totalCost} makePayment={makePayment}/>
             <HStack mt="6" fontWeight="semibold">
               <p>or</p>
@@ -203,7 +218,17 @@ function Cart() {
           </Flex>
         </Stack>
       </Box>
-  </>
+      <Box
+          w='100%'
+          h='70px'
+          // bg='#00957b'
+          // mt='100px'
+          position='relative'
+          top='70px'
+          // border='1px solid red'
+          borderRadius='0 0 100px 100px'
+      ></Box>
+  </Box>
   );
 }
 

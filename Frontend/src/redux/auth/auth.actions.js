@@ -1,5 +1,5 @@
 import axios from "axios"
-import { GET_ALL_ERROR, GET_ALL_LOADING, GET_ALL_SUCCESS, LOGIN_ERROR, LOGIN_LOADING, LOGIN_SUCCESS, SIGNUP_ERROR, SIGNUP_LOADING, SIGNUP_SUCCESS } from "./auth.type"
+import { GET_ALL_ERROR, GET_ALL_LOADING, GET_ALL_SUCCESS, LOGIN_ERROR, LOGIN_LOADING, LOGIN_SUCCESS, LOGOUT_SUCCESS, SIGNUP_ERROR, SIGNUP_LOADING, SIGNUP_SUCCESS } from "./auth.type"
 
 export const signupAction = (creds) => async (dispatch) => {
     dispatch({type: SIGNUP_LOADING})
@@ -42,5 +42,6 @@ export const getAllUsersAction = (userId) => async(dispatch) => {
 export const logoutAction = () => async(dispatch) => {
     // dispatch({type: LOGI})
     localStorage.removeItem("userData")
+    dispatch({type: LOGOUT_SUCCESS})
     return "Logged out successfully"
 }

@@ -1,7 +1,7 @@
 const { Schema, model, default: mongoose } = require("mongoose");
 
 const singleProductObjectSchema = new Schema({
-    productId : {type: mongoose.Types.ObjectId, ref: 'product'},
+    productId : {type: mongoose.Schema.Types.ObjectId, ref: 'product'},
     quantity : {type: Number}
 })
 const orderSchema = new Schema({

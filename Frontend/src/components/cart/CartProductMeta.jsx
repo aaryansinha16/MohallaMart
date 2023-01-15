@@ -35,12 +35,12 @@ import {
         <Box pt="4">
           <Stack spacing="0.5">
             <Text fontWeight="medium">{name}</Text>
-            <Text color={mode('gray.600', 'gray.400')} fontSize="sm">
+            {/* <Text fontSize="sm">
               {description}
-            </Text>
+            </Text> */}
           </Stack>
           {isGiftWrapping && (
-            <HStack spacing="1" mt="3" color={mode('gray.600', 'gray.400')}>
+            <HStack spacing="1" mt="3">
               <Icon as={FiGift} boxSize="4" />
               <Link fontSize="sm" textDecoration="underline">
                 Add gift wrapping

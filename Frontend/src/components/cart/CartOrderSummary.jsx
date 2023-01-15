@@ -56,7 +56,10 @@ import Login from '../../routes/Login.jsx'
     const [overlay, setOverlay] = React.useState(<OverlayOne />)
 
     return (
-      <Stack spacing="8" borderWidth="1px" rounded="lg" padding="8" width="full">
+      <Stack bg='#ffe058'
+      color='#816101'
+        // color='purple'
+      style={{backdropFilter: 'blur(4px)'}}  spacing="8" rounded="lg" padding="8" width="full">
         <Heading size="md">Order Summary</Heading>
   
         <Stack spacing="6">
@@ -65,15 +68,15 @@ import Login from '../../routes/Login.jsx'
           <Flex flexDir='column' gap={3}>
             <VStack spacing={0} align='flex-start'>
                 <label style={{fontSize: '14px'}}>Name</label>
-                <Input ref={nameRef} placeholder='Enter Name...' onChange={(e) => setName(e.target.value)}/>
+                <Input bg='green.300' _placeholder={{color:'white'}} color='white' ref={nameRef} placeholder='Enter Name...' onChange={(e) => setName(e.target.value)}/>
             </VStack>
             <VStack spacing={0} align='flex-start'>
                 <label style={{fontSize: '14px'}}>Email</label>
-                <Input ref={emailRef} placeholder='Enter Email...'/>
+                <Input bg='green.300' _placeholder={{color:'white'}} color='white' ref={emailRef} placeholder='Enter Email...'/>
             </VStack>
             <VStack spacing={0} align='flex-start'>
                 <label style={{fontSize: '14px'}}>Contact</label>
-                <Input ref={contactRef} placeholder='Enter Contact...'/>
+                <Input bg='green.300' _placeholder={{color:'white'}} color='white' ref={contactRef} placeholder='Enter Contact...'/>
             </VStack>
           </Flex>
 
@@ -86,7 +89,7 @@ import Login from '../../routes/Login.jsx'
             </Text>
           </Flex>
         </Stack>
-        <Button disabled={name.length == 0 ? true : false}  colorScheme="blue" size="lg" fontSize="md" rightIcon={<FaArrowRight />} onClick={() => {
+        <Button disabled={name.length == 0 ? true : false} color='white' bg='green.300' variant='solid' size="lg" fontSize="md" rightIcon={<FaArrowRight />} onClick={() => {
             let localData = JSON.parse(localStorage.getItem("userData")) || undefined
             if(localData != undefined) makePayment(nameRef.current.value, emailRef.current.value, contactRef.current.value, totalCost)
             else {

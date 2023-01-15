@@ -10,7 +10,7 @@ app.post('/', async(req, res) => {
         key_secret: 'dJwImnrybXZJbxcrOMYejQuR',
     });
     var total = (req.body)
-    // console.log(total, "REQ BODY")
+    console.log(total, "REQ BODY")
     
     // Create an order -> generate the OrderID -> Send it to the Front-end
     // Also, check the amount and currency on the backend (Security measure)

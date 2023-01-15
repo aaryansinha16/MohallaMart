@@ -1,55 +1,69 @@
 import {Link, useNavigate} from "react-router-dom"
-import { Grid, Text, Input, Flex, Button, Checkbox, InputGroup,InputLeftAddon, useToast, HStack, PinInput, PinInputField, FormLabel  } from "@chakra-ui/react"
+import { Grid, Text, Input, Flex, Button, Checkbox, InputGroup,InputLeftAddon, Toast, useToast, Modal, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useDisclosure, ModalOverlay, keyframes, usePrefersReducedMotion, VStack, FormLabel  } from "@chakra-ui/react"
+
 
 // Import Components
-// import Navbar from "../components/Login/Navbar"
-// import PasswordInput from "../components/Login/PasswordInput"
 import useForm from "../Hooks/useForm"
 
 // Import stylesheet
 import style from "../styles/auth.module.css"
 
-// Images import 
-import { useRef } from "react"
+import { useEffect, useState } from "react"
 // import BoxImage from "../components/Login/BoxImage"
-import axios from "axios"
+// import Errordiv from "../components/Login/Errordiv"
+import {useRef} from 'react'
 import { useDispatch } from "react-redux"
-import { signupAction } from "../redux/auth/auth.actions"
+import { loginAction } from "../redux/auth/auth.actions"
+import PasswordInput from "../components/inputComps/PasswordInput"
 
-export default function Signup(){
+
+const changeCol = keyframes`
+  from { backdrop-filter:blur(0px) hue-rotate(0deg);  }
+  to { backdrop-filter:blur(8px) hue-rotate(90deg);}
+`
+
+
+export default function Signup({isOpen, onClose}){
     const { creds, execute} = useForm();
     const firstRef = useRef(null)
     const toast = useToast()
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const preferReducedMotion = usePrefersReducedMotion()
+    const animation = preferReducedMotion
+    ? undefined
+    : `${changeCol} 1 10s linear`
+
 
     const handleChange = (e) => {
         let { name, value } = e.target;
         execute(name, value);
         creds.password = firstRef.current.value
+        // console.log(creds, firstRef.current.value)
     }
 
     const handleSubmit = () =>{
-        
         toast({
-            title: 'Signing up.',
-            description: "Creating your account.",
+            title: 'Signing you in.',
+            description: "Checking your credentials",
             status: 'info',
             duration: 1000,
             isClosable: true,
         })
-        
-        dispatch(signupAction(creds))
+        console.log('CREDS',creds);
+        dispatch(loginAction(creds))
         .then((res) => {
-            console.log(res, 'RESPONSE FOR SIGNUP')
+            console.log(res, 'RESPONSE FOR LOGIN PAGE')
             if(!res.description){
                 toast({
-                    title: 'Account created.',
-                    description: res.message,
+                    title: 'Login Successful',
+                    description: "Hooray! You have successfully logged in.",
                     status: 'success',
-                    duration: 6000,
+                    duration: 9000,
                     isClosable: true,
                 })
+                onClose()
+                // navigate("/products")
             }
             else{
                 toast({
@@ -62,38 +76,74 @@ export default function Signup(){
             }
         })
     }
-
-    return(
-       <Grid templateColumns={{base:"1fr", sm:"1fr", md:"1fr", lg:"2fr 1.5fr"}}>
-            <Grid  p={{base:"2", sm:"2",md:'2', lg:"10"}} h="100vh" templateRows="7vh 93vh" >
-                <Navbar />
-                <Flex className={style.form} flexDirection="column" gap={5} 
-                    w={{base:"100%", sm:"100%", md:"80%", lg:"60%"}}  m="auto"  bgColor="white" 
-                    px={{base:"10px", sm:"10px", md:"20px", lg:"50px"}}
-                    py={{base:"30px", sm:"30px", md:"50px", lg:"50px"}}
-                    position="relative"
+    // <PasswordInput firstRef={firstRef} handleChange={handleChange}/>
+    // <Button colorScheme="transparent" color="black" onClick={handleSubmit}>Sign in</Button>
+    
+    const OverlayOne = () => (
+        <ModalOverlay
+          bg='blackAlpha.300'
+          backdropFilter='blur(8px) hue-rotate(90deg)'
+          transition='2s linear'
+          animation={animation}
+          />
+          )
+          
+          // const { isOpen, onOpen, onClose } = useDisclosure()
+          const [overlay, setOverlay] = useState(<OverlayOne />)
+          
+          return (
+            <>
+          <Modal isCentered isOpen={isOpen} onClose={onClose}>
+            {overlay}
+            <ModalContent 
+              boxShadow='2xl'
+              borderRadius='40px'
+              px={3}
+              bg='#ffe058'
+              color='#816101'
+              >
+              <ModalHeader fontSize='26px' fontFamily='mono'>Login</ModalHeader>
+              <ModalCloseButton mr='20px' mt='10px'/>
+              <ModalBody>
+                <VStack
+                  w='100%'
+                  m='auto'
+                  spacing={3}
                 >
-                    {/* <Text position="absolute" top={{base:"0", md:"-20px", lg:"-40px"}} left={{base:"10px", lg:"-60px"}} fontSize={{base:"1rem", md:"3rem"}} fontWeight="bold" >WELCOME ONBOARD!</Text> */}
+                  <VStack w='100%' alignItems='flex-start' spacing={-2}>
+                    <FormLabel>Email: </FormLabel>
+                    <Input 
+                      placeholder="example@email.com" 
+                      name="email" 
+                      onChange={handleChange}
+                      bg='green.300'
+                      colorScheme='yellow'
+                      color='white'
+                      borderColor='transparent'
+                      _placeholder={{color:'gray.100'}}
+                      focusBorderColor='transparent'
+                      _hover={{focusBorderColor:'transparent'}}
+                      />
+                  </VStack>
+                  <VStack w='100%' alignItems='flex-start' spacing={-2}>
+                    <FormLabel>Password:</FormLabel>
+                    <PasswordInput firstRef={firstRef} handleChange={handleChange} />
+                  </VStack>
+                </VStack>
+                <VStack alignItems='center' w='100%' mt='10px'>
+                  <Link to='/forgot-password'><Text textAlign='center' _hover={{color:'white'}}>Forgot your password?</Text></Link>
+                </VStack>
+              </ModalBody>
+              <ModalFooter as={Flex} justifyContent='center' flexDir='column' alignItems='center' pt='5px'>
+                <Button boxShadow='2xl' onClick={handleSubmit} w='50%' colorScheme='green' variant='solid' bg='green.300' color='white'>Login</Button>
 
-                    <Text className={style.head}>Create an Account</Text>
-
-                    <Grid gap="20px" templateColumns="repeat(2,1fr)" >
-                        <Input placeholder="First name" name="fName" onChange={handleChange} />
-                        <Input placeholder="Last name"  name="lName" onChange={handleChange} />
-                    </Grid>
-                        <Input placeholder="example@email.com" name="email" onChange={handleChange} />
-                    <PasswordInput firstRef={firstRef} handleChange={handleChange}/>
-                    <InputGroup>
-                        <Input type='text' placeholder='Username' name="username" onChange={handleChange} />
-                    </InputGroup>
-                    <Button colorScheme="transparent" color="black" onClick={handleSubmit}>Signup</Button>
-                    <Checkbox size='lg' defaultChecked>
-                        Signup for offers & discounts
-                    </Checkbox>
-                    <Text >Already have an account? <Link to="/login">Sign in.</Link></Text>
+                <Flex justifyContent='center' w='100%' mt='10px'>
+                  <Text>Don't have an account? </Text>
+                  <Text fontWeight='bold' _hover={{color:'white'}}>{" "}Create new account!</Text>
                 </Flex>
-            </Grid>
-           {/* <BoxImage /> */}
-       </Grid>
-    )
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+        </>
+      )
 }

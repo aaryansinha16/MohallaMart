@@ -1,5 +1,5 @@
 
-import { Img, Flex, Button,  HStack, Menu, MenuButton, MenuList, MenuItem, Tooltip, useDisclosure, Collapse, Stack, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, DrawerFooter, VStack, cookieStorageManager, useToast, MenuGroup, MenuDivider, Avatar, Text, Image } from "@chakra-ui/react";
+import { Img, Flex, Button,  HStack, Menu, MenuButton, MenuList, MenuItem, Tooltip, useDisclosure, Collapse, Stack, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, DrawerFooter, VStack, cookieStorageManager, useToast, MenuGroup, MenuDivider, Avatar, Text, Image, ModalOverlay } from "@chakra-ui/react";
 
 import {Link} from 'react-router-dom'
 
@@ -17,6 +17,10 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import {GrUserAdmin} from 'react-icons/gr'
 import AvatarImg from '../Resources/avatar.jpg'
 import CurlyArrow from '../Resources/curlyArrow.png'
+import {useDispatch, useSelector} from 'react-redux'
+import { logoutAction } from "../redux/auth/auth.actions";
+import { store } from "../redux/store";
+import BecomeSeller from "./BecomeSellerModal";
 
 let localData = JSON.parse(localStorage.getItem("userData")) || undefined
 export default function Navbar(){
@@ -26,34 +30,54 @@ export default function Navbar(){
     const toast = useToast()
     const [role, setRole] = useState()
     const [render, setRender] = useState(false)
+    const [drMod, setDrMod] = useState(true)
+
+    const dispatch = useDispatch()
+
+    const OverlayOne = () => (
+        <ModalOverlay
+        bg='blackAlpha.300'
+        backdropFilter='blur(10px) hue-rotate(90deg)'
+        />
+      )
+    // const { isOpen, onOpen, onClose } = useDisclosure()
+    const [overlay, setOverlay] = useState(<OverlayOne />)
     useEffect(() => {
 
     }, [render])
 
     const handleSeller = () => {
-        // if(props != ""){
-        // }else{
-        //     toast({
-        //         title:'You have to Login first',
-        //         description: "Login OR Create an account first",
-        //         status: 'warning',
-        //         duration: 6000,
-        //         isClosable: true,
-        //     })
-        // }
+        setDrMod(true)
+        let localData = JSON.parse(localStorage.getItem("userData")) || undefined
+
+        if(localData.role == "Buyer"){
+            onOpen()
+            setOverlay(<OverlayOne/>)
+        } 
     }
+
+    const forceUpdate = () => setRender((prev) => prev + 1)
+    store.subscribe(forceUpdate)
+    let log = useSelector((store) => console.log(store.auth))
+
     
     const handleLogout = () => {
-        localStorage.removeItem("userData")
-        toast({
-            title: "Logout Successfull",
-            description : "Logged you out successfully",
-            status: "success",
-            duration : 4000,
-            isClosable : true
+        dispatch(logoutAction())
+        .then((res) => {
+            toast({
+                title: "Logout Successfull",
+                description : "Logged you out successfully",
+                status: "success",
+                duration : 4000,
+                isClosable : true
+            })
+            setRender((prev) => !prev)
         })
-        setRender((prev) => !prev)
+        // localStorage.removeItem("userData")
     }
+
+
+
 
     return(
         <HStack 
@@ -78,16 +102,17 @@ export default function Navbar(){
             </Flex>
 
             
-            <Flex w='40%' gap="5px" alignItems="center" justifyContent='center'>
+            <Flex w='40%' gap="5px" alignItems="center" justifyContent={{base:'flex-start', md:'center'}}>
                 <Link to="/" >
-                    <Img src={logo} w="90px" transform='scale(1.5)' transition='1s ease'  _hover={{transform:'scale(1.5) rotate(360deg)'}}/>
+                    <Img src={logo} w="90px" transform={{base:'scale(1.2)', md:'scale(1.5)'}} transition='1s ease'  _hover={{transform:'scale(1.5) rotate(360deg)'}}/>
                 </Link>
             </Flex>
 
             {/* <Button size='lg' colorScheme='yellow'  color='white'>Become Merchent</Button> */}
 
-            <Menu isLazy>
+            <Menu isLazy >
                 <Flex
+                    display={{base:'none', md:'flex'}}
                     w='30%'
                     alignItems='center'
                     justifyContent='flex-end'>
@@ -105,7 +130,7 @@ export default function Navbar(){
                     </MenuGroup>
                     <MenuDivider />
                     <MenuGroup title='Options'>
-                        <MenuItem><Link to='/become-seller'>Become a Merchent</Link></MenuItem>
+                        {localData?.role == 'Buyer' &&<MenuItem onClick={() => handleSeller()}>Become a Merchent</MenuItem>}
                         {
                             localData != undefined && <MenuItem onClick={() => handleLogout()}>Logout</MenuItem>
                         }
@@ -117,14 +142,17 @@ export default function Navbar(){
                 </MenuList>
             </Menu>
 
-
+            <BecomeSeller isOpen={isOpen} onClose={onClose} drMod={drMod} setDrMod={setDrMod} />
              
-            <Button ref={btnRef} colorScheme='transparent' color="black" border="1px solid" onClick={onOpen} display={{md:'none'}}>
+            <Button ref={btnRef} colorScheme='transparent' color="white" border="1px solid" onClick={() => {
+                setDrMod(false)
+                onOpen()
+            }} display={{md:'none'}}>
                 <GiHamburgerMenu />
             </Button>
 
             <Drawer
-                isOpen={isOpen}
+                isOpen={isOpen && drMod == false}
                 placement='right'
                 onClose={onClose}
                 finalFocusRef={btnRef}

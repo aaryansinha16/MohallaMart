@@ -47,39 +47,39 @@ const AllRoutes = () => {
         } />
         <Route path='/orders' element={
           <>
-          <Navbar />
+          {/* <Navbar /> */}
             <Orders />
           <Footer />
           </>
         } />
         <Route path='/cart' element={
           <>
-          <Navbar />
+          {/* <Navbar /> */}
             <Cart />
           <Footer />
           </>
         } />
-        <Route path='/forgot-password' element={
+        {/* <Route path='/forgot-password' element={
           <>
             <Navbar />
               <ForgotPassword />
             <Footer />
           </>
-        } />
-        <Route path='/become-seller' element={
+        } /> */}
+        {/* <Route path='/become-seller' element={
           <>
             <Navbar />
               <BecomeSeller />
             <Footer />
           </>
-        } />
-        <Route path='/login' element={
+        } /> */}
+        {/* <Route path='/login' element={
           <>
             <Navbar />
               <Login />
             <Footer />
           </>
-        } />
+        } /> */}
         {/* <Route path='/signup' element={
           <>
             <Navbar />
@@ -87,7 +87,7 @@ const AllRoutes = () => {
             <Footer />
           </>
         } /> */}
-        <Route path='admin' element={<Admin />} />
+        <Route path='/admin' element={<Admin />} />
     </Routes>
   )
 }

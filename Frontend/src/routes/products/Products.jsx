@@ -166,7 +166,18 @@ export default function Products({props}={}) {
 
                 </Flex>
 
+            <Box
+            w='100%'
+            h='70px'
+            bg='#00957b'
+            // mt='100px'
+            position='relative'
+            top='70px'
+            // border='1px solid red'
+            borderRadius='0 0 100px 100px'
+        ></Box>
             </Box>
+
 
         </Box>
     </>

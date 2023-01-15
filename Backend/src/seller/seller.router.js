@@ -33,7 +33,7 @@ app.get("/", async(req,res) => {
 //? POST for becoming a seller OR if already seller then revert back to buyer
 //! Only accessable for BUYERS & SELLERS (as only buyers can become a seller)
 app.post("/become", async(req,res) => {
-    let {storeName, userId} = req.body
+    let {storeName, userId, user} = req.body
     if(user.role == "Admin"){
         return res.status(403).send({
             message: "Hey!, you are already ADMIN"

@@ -1,4 +1,4 @@
-import { GET_ALL_ERROR, GET_ALL_LOADING, GET_ALL_SUCCESS, LOGIN_ERROR, LOGIN_LOADING, LOGIN_SUCCESS, SIGNUP_ERROR, SIGNUP_LOADING, SIGNUP_SUCCESS } from "./auth.type"
+import { GET_ALL_ERROR, GET_ALL_LOADING, GET_ALL_SUCCESS, LOGIN_ERROR, LOGIN_LOADING, LOGIN_SUCCESS, LOGOUT_SUCCESS, SIGNUP_ERROR, SIGNUP_LOADING, SIGNUP_SUCCESS } from "./auth.type"
 
 const initialState = {
     loading : false,
@@ -74,6 +74,14 @@ export const authReducer = (state = initialState, {type , payload}) => {
                 loading : false,
                 error : false,
                 payload: payload
+            }
+        }
+        case LOGOUT_SUCCESS : {
+            return {
+                ...state,
+                loading : false,
+                error: false,
+                payload : null
             }
         }
         default : {

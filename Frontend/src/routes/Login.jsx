@@ -1,5 +1,5 @@
 import {Link, useNavigate} from "react-router-dom"
-import { Grid, Text, Input, Flex, Button, Checkbox, InputGroup,InputLeftAddon, Toast, useToast, Modal, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useDisclosure, ModalOverlay, keyframes, usePrefersReducedMotion, VStack, FormLabel  } from "@chakra-ui/react"
+import { Grid, Text, Input, Flex, Button, Checkbox, InputGroup,InputLeftAddon, Toast, useToast, Modal, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useDisclosure, ModalOverlay, keyframes, usePrefersReducedMotion, VStack, FormLabel, HStack  } from "@chakra-ui/react"
 
 
 // Import Components
@@ -13,8 +13,9 @@ import { useEffect, useState } from "react"
 // import Errordiv from "../components/Login/Errordiv"
 import {useRef} from 'react'
 import { useDispatch } from "react-redux"
-import { loginAction } from "../redux/auth/auth.actions"
+import { loginAction, signupAction } from "../redux/auth/auth.actions"
 import PasswordInput from "../components/inputComps/PasswordInput"
+import Signup from "./Signup"
 
 
 const changeCol = keyframes`
@@ -24,6 +25,7 @@ const changeCol = keyframes`
 
 
 export default function Login({isOpen, onClose}){
+    const [state, setState] = useState(true)
     const { creds, execute} = useForm();
     const firstRef = useRef(null)
     const toast = useToast()
@@ -43,6 +45,7 @@ export default function Login({isOpen, onClose}){
     }
 
     const handleSubmit = () =>{
+      if(state == true){
         toast({
             title: 'Signing you in.',
             description: "Checking your credentials",
@@ -62,7 +65,8 @@ export default function Login({isOpen, onClose}){
                     duration: 9000,
                     isClosable: true,
                 })
-                navigate("/products")
+                onClose()
+                // navigate("/products")
             }
             else{
                 toast({
@@ -74,7 +78,43 @@ export default function Login({isOpen, onClose}){
                 })
             }
         })
+      }
+      else{
+        toast({
+            title: 'Signing you up.',
+            description: "Checking your credentials",
+            status: 'info',
+            duration: 1000,
+            isClosable: true,
+        })
+        console.log('CREDS signup',creds);
+        dispatch(signupAction(creds))
+        .then((res) => {
+            console.log(res, 'RESPONSE FOR LOGIN PAGE')
+            if(!res.description){
+                toast({
+                    title: 'Signup Successful',
+                    description: "Hooray! You have successfully logged in.",
+                    status: 'success',
+                    duration: 9000,
+                    isClosable: true,
+                })
+                onClose()
+                // navigate("/products")
+            }
+            else{
+                toast({
+                    title: res.message,
+                    description: res.description,
+                    status: 'error',
+                    duration: 5000,
+                    isClosable: true,
+                })
+            }
+        })
+      }
     }
+
     // <PasswordInput firstRef={firstRef} handleChange={handleChange}/>
     // <Button colorScheme="transparent" color="black" onClick={handleSubmit}>Sign in</Button>
     
@@ -95,13 +135,14 @@ export default function Login({isOpen, onClose}){
           <Modal isCentered isOpen={isOpen} onClose={onClose}>
             {overlay}
             <ModalContent 
+              transition='1s linear'
               boxShadow='2xl'
               borderRadius='40px'
               px={3}
               bg='#ffe058'
               color='#816101'
               >
-              <ModalHeader fontSize='26px' fontFamily='mono'>Login</ModalHeader>
+              <ModalHeader fontSize='26px' fontFamily='mono'>{state ? 'Login' : 'Signup'}</ModalHeader>
               <ModalCloseButton mr='20px' mt='10px'/>
               <ModalBody>
                 <VStack
@@ -109,6 +150,58 @@ export default function Login({isOpen, onClose}){
                   m='auto'
                   spacing={3}
                 >
+                  {
+                    state == false && <HStack>
+                    <VStack w='100%' alignItems='flex-start' spacing={-2} transition='1s linear'>
+                      <FormLabel>First Name: </FormLabel>
+                      <Input 
+                        placeholder="John" 
+                        name="text" 
+                        onChange={handleChange}
+                        bg='green.300'
+                        colorScheme='yellow'
+                        color='white'
+                        borderColor='transparent'
+                        _placeholder={{color:'gray.100'}}
+                        focusBorderColor='transparent'
+                        _hover={{focusBorderColor:'transparent'}}
+                        />
+                    </VStack>
+                    <VStack w='100%' alignItems='flex-start' spacing={-2}>
+                      <FormLabel>Last Name: </FormLabel>
+                      <Input 
+                        placeholder="Doe" 
+                        name="text" 
+                        onChange={handleChange}
+                        bg='green.300'
+                        colorScheme='yellow'
+                        color='white'
+                        borderColor='transparent'
+                        _placeholder={{color:'gray.100'}}
+                        focusBorderColor='transparent'
+                        _hover={{focusBorderColor:'transparent'}}
+                        />
+                    </VStack>
+                  </HStack>
+                  }
+                  {
+                    state == false &&
+                    <VStack w='100%' alignItems='flex-start' spacing={-2}>
+                      <FormLabel>Username: </FormLabel>
+                      <Input 
+                        placeholder="abc1221" 
+                        name="text" 
+                        onChange={handleChange}
+                        bg='green.300'
+                        colorScheme='yellow'
+                        color='white'
+                        borderColor='transparent'
+                        _placeholder={{color:'gray.100'}}
+                        focusBorderColor='transparent'
+                        _hover={{focusBorderColor:'transparent'}}
+                        />
+                    </VStack>
+                  }
                   <VStack w='100%' alignItems='flex-start' spacing={-2}>
                     <FormLabel>Email: </FormLabel>
                     <Input 
@@ -134,11 +227,18 @@ export default function Login({isOpen, onClose}){
                 </VStack>
               </ModalBody>
               <ModalFooter as={Flex} justifyContent='center' flexDir='column' alignItems='center' pt='5px'>
-                <Button boxShadow='2xl' onClick={handleSubmit} w='50%' colorScheme='green' variant='solid' bg='green.300' color='white'>Login</Button>
+                <Button boxShadow='2xl' onClick={handleSubmit} w='50%' colorScheme='green' variant='solid' bg='green.300' color='white'>{state ? 'Login' : 'Signup'}</Button>
 
                 <Flex justifyContent='center' w='100%' mt='10px'>
-                  <Text>Don't have an account? </Text>
-                  <Link to='signup'><Text fontWeight='bold' _hover={{color:'white'}}>{" "}Create new account!</Text></Link>
+                  {
+                    state ?
+                    <><Text>Don't have an account? </Text>
+                    <Text onClick={() => setState(false)} fontWeight='bold' _hover={{color:'white'}}>{" "}Create new account!</Text></>
+                    :
+                    <><Text>Already have an Account? </Text>
+                    <Text onClick={() => setState(true)} fontWeight='bold' _hover={{color:'white'}}>{" "}Login!</Text></>
+                  }
+                  {/* <Signup isOpen={isOpen} onClose={onClose}/> */}
                 </Flex>
               </ModalFooter>
             </ModalContent>
