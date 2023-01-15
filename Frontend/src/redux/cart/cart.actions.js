@@ -4,7 +4,7 @@ import { CART_DELETE_ERROR, CART_DELETE_LOADING, CART_DELETE_SUCCESS, CART_GET_E
 export const postCartAction = (userId, productId) => async(dispatch) => {
     dispatch({type: CART_POST_LOADING})
     try{
-        let data = await axios.post(`http://localhost:3000/cart/new-item`, {userId, productId})
+        let data = await axios.post(`https://helpful-tan-cricket.cyclic.app/cart/new-item`, {userId, productId})
         dispatch({type: CART_POST_SUCCESS, payload: data.data})
         return data.data
     }catch(e){
@@ -16,7 +16,7 @@ export const postCartAction = (userId, productId) => async(dispatch) => {
 export const getCartAction = (userId) => async (dispatch) => {
     dispatch({type: CART_GET_LOADING})
     try{
-        let data = await axios.get(`http://localhost:3000/cart?userId=${userId}`)
+        let data = await axios.get(`https://helpful-tan-cricket.cyclic.app/cart?userId=${userId}`)
         dispatch({type: CART_GET_SUCCESS, payload: data.data})
         return data.data
     }catch(e){
@@ -28,7 +28,7 @@ export const getCartAction = (userId) => async (dispatch) => {
 export const deleteCartAction = (userId, productId) => async(dispatch) => {
     dispatch({type: CART_DELETE_LOADING})
     try{
-        let data = await axios.delete('http://localhost:3000/cart/remove-cart', {
+        let data = await axios.delete('https://helpful-tan-cricket.cyclic.app/cart/remove-cart', {
             headers : {
                 userId : userId,
                 productId : productId

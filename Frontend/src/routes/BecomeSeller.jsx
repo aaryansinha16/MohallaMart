@@ -15,25 +15,6 @@ import {
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import {useRef, useState} from 'react'
-import axios from 'axios';
-
-
-// export const getServerSideProps = async ({req}) => {
-//   // console.log(req, 'NaVbArhhhhhhhhhhhhhhh')
-
-//   if(!req.cookies.mohallaMartJwt){
-//     return {
-//         redirect: {
-//             destination: '/products',
-//             permanent: false,
-//         },
-//     }
-// }
-
-//   return {
-//       props: {props: req.cookies.mohallaMartJwt}
-//   }
-// }
 
 export default function BecomeSeller({props}) {
 
@@ -42,29 +23,7 @@ export default function BecomeSeller({props}) {
   const toast = useToast()
 
   const handleSeller = () => {
-    console.log(storeRef.current.value, regRef.current.value)
-    axios.post('/api/sellers', {
-      storeName: storeRef.current.value, 
-      reg: regRef.current.value
-    }).then((res) => {
-      console.log(res,'sellerRes')
-      toast({
-        title: 'Congrats!.',
-        description: "You have successfully became a seller at MohallaMart",
-        status: 'success',
-        duration: 4000,
-        isClosable: true,
-      })
-    }).catch((e) => {
-      console.log(e, 'sellerError')
-      toast({
-        title: 'Oops!.',
-        description: "Looks like something went wrong, please try again!",
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      })
-    })
+    
   }
 
   return (

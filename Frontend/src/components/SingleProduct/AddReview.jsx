@@ -1,5 +1,4 @@
 import { Box, Button, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure } from "@chakra-ui/react"
-import axios from "axios"
 import React, { useState , useEffect } from "react"
 import { BsStarFill } from "react-icons/bs"
 import {GoPlus} from "react-icons/go"

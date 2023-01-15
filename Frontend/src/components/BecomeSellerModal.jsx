@@ -47,7 +47,7 @@ export default function BecomeSeller({isOpen, onClose, drMod}){
     const [overlay, setOverlay] = useState(<OverlayOne />)
 
     async function becomeSeller(userId, storeName, user){
-        let data = await axios.post('http://localhost:3000/seller/become', {userId, storeName, user})
+        let data = await axios.post('https://helpful-tan-cricket.cyclic.app/seller/become', {userId, storeName, user})
         return data.data
     }
 

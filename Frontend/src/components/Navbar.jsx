@@ -12,7 +12,6 @@ import TopSec from "./Products/TopSec";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { GiHamburgerMenu } from "react-icons/gi"
 import { useRef, useState, useEffect } from "react";
-import axios from "axios";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import {GrUserAdmin} from 'react-icons/gr'
 import AvatarImg from '../Resources/avatar.jpg'

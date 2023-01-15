@@ -4,7 +4,7 @@ import { PRODUCT_ERROR, PRODUCT_LOADING, PRODUCT_SUCCESS } from "./product.types
 export const getProductsAction = () => async(dispatch) => {
     dispatch({type: PRODUCT_LOADING})
     try{
-        let data = await axios('http://localhost:3000/products')
+        let data = await axios('https://helpful-tan-cricket.cyclic.app/products')
         dispatch({type: PRODUCT_SUCCESS, payload: data.data})
         return data.data
     }catch(e){
@@ -16,7 +16,7 @@ export const getProductsAction = () => async(dispatch) => {
 export const getSingleProduct = (prodId) => async (dispatch) => {
     dispatch({type: PRODUCT_LOADING})
     try{
-        let data = await axios.get(`http://localhost:3000/products/single-product?q=${prodId}`)
+        let data = await axios.get(`https://helpful-tan-cricket.cyclic.app/products/single-product?q=${prodId}`)
         // console.log(data.data, 'REDUX SINGLE', prodId)
         dispatch({type: PRODUCT_SUCCESS, payload: data.data})
         return data.data

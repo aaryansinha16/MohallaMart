@@ -4,7 +4,7 @@ import { GET_ALL_ERROR, GET_ALL_LOADING, GET_ALL_SUCCESS, LOGIN_ERROR, LOGIN_LOA
 export const signupAction = (creds) => async (dispatch) => {
     dispatch({type: SIGNUP_LOADING})
     try{
-        let data = await axios.post('http://localhost:3000/user/signup', creds)
+        let data = await axios.post('https://helpful-tan-cricket.cyclic.app/user/signup', creds)
         dispatch({type: SIGNUP_SUCCESS, payload : data.data})
         localStorage.setItem("userData", JSON.stringify(data.data.data))
         return data.data
@@ -18,7 +18,7 @@ export const signupAction = (creds) => async (dispatch) => {
 export const loginAction = (creds) => async(dispatch) => {
     dispatch({type: LOGIN_LOADING})
     try{
-        let data = await axios.post('http://localhost:3000/user/login', creds)
+        let data = await axios.post('https://helpful-tan-cricket.cyclic.app/user/login', creds)
         dispatch({type: LOGIN_SUCCESS, payload: data.data})
         localStorage.setItem("userData", JSON.stringify(data.data.data))
         return data.data
@@ -31,7 +31,7 @@ export const loginAction = (creds) => async(dispatch) => {
 export const getAllUsersAction = (userId) => async(dispatch) => {
     dispatch({type: GET_ALL_LOADING})
     try{
-        let data = await axios.get(`http://localhost:3000/user?q=${userId}`)
+        let data = await axios.get(`https://helpful-tan-cricket.cyclic.app/user?q=${userId}`)
         dispatch({type: GET_ALL_SUCCESS, payload : data.data})
         return data.data
     }catch(e){

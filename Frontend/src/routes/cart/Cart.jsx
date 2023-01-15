@@ -115,7 +115,7 @@ function Cart() {
     }
 
     // Make API call to the serverless API
-    const data = await axios.post("http://localhost:3000/razorpay", {name,email,contact,amount})
+    const data = await axios.post("https://helpful-tan-cricket.cyclic.app/razorpay", {name,email,contact,amount})
     var options = {
       key: 'rzp_test_hQsLO3wTpgFfia', // Enter the Key ID generated from the Dashboard
       name: "Mohalla Mart Pvt Ltd",

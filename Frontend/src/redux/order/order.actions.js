@@ -5,7 +5,7 @@ import { ORDER_GET_ERROR, ORDER_GET_LOADING, ORDER_GET_SUCCESS, ORDER_POST_ERROR
 export const getOrderAction = (userId) => async(dispatch) => {
     dispatch({type: ORDER_GET_LOADING})
     try{
-        let data = await axios.get(`http://localhost:3000/orders?userId=${userId}`)
+        let data = await axios.get(`https://helpful-tan-cricket.cyclic.app/orders?userId=${userId}`)
         dispatch({type: ORDER_GET_SUCCESS, payload : data.data})
         return data.data
     }catch(e){
@@ -19,7 +19,7 @@ export const getOrderAction = (userId) => async(dispatch) => {
 export const postOrderAction = (userId, totalCost, products) => async(dispatch) => {
     dispatch({type: ORDER_POST_LOADING})
     try{
-        let data = await axios.post('http://localhost:3000/orders/new-order', {userId, totalCost, products})
+        let data = await axios.post('https://helpful-tan-cricket.cyclic.app/orders/new-order', {userId, totalCost, products})
         dispatch({type: ORDER_POST_SUCCESS, payload: data.data})
         return data.data
     }catch(e){
@@ -33,7 +33,7 @@ export const postOrderAction = (userId, totalCost, products) => async(dispatch) 
 export const getAllOrdersAction = (userId) => async(dispatch) => {
     dispatch({type: ORDER_GET_LOADING})
     try{
-        let data = await axios.get(`http://localhost:3000/orders/all-orders?userId=${userId}`)
+        let data = await axios.get(`https://helpful-tan-cricket.cyclic.app/orders/all-orders?userId=${userId}`)
         dispatch({type: ORDER_GET_SUCCESS, payload: data.data})
         return data.data
     }catch(e){
