@@ -57,7 +57,7 @@ export default function Navbar(){
 
     const forceUpdate = () => setRender((prev) => prev + 1)
     store.subscribe(forceUpdate)
-    let log = useSelector((store) => console.log(store.auth))
+    // let log = useSelector((store) => console.log(store.auth))
 
     
     const handleLogout = () => {

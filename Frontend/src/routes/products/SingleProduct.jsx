@@ -29,18 +29,23 @@ import { useRef } from "react";
 import { io } from 'socket.io-client'
 import Login from "../Login";
 import Reviews from "../../components/SingleProduct/Reviews";
+import { getReviewsAction, postReviewAction } from "../../redux/reviews/reviews.actions";
+import { store } from "../../redux/store";
 
-const Socket = io.connect('https://helpful-tan-cricket.cyclic.app/')
+// const Socket = io.connect('https://helpful-tan-cricket.cyclic.app', {transports: ['polling']})
 const SingleProductPage = ({props}) => {
   const [data, setData] = useState()
   const [reviews,setReviews] = useState()
-  const [reRender, setReRender] = useState(false)
+  const [render, setRender] = useState(false)
   const [loggedIn , setLoggedIn]  = useState("")
   const reviewRef = useRef(null)
   
   const params = useParams()
   const dispatch = useDispatch()
   const toast = useToast()
+
+  const forceUpdate = () => setRender((prev) => prev + 1)
+  store.subscribe(forceUpdate)
 
   const OverlayOne = () => (
     <ModalOverlay
@@ -51,9 +56,9 @@ const SingleProductPage = ({props}) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [overlay, setOverlay] = useState(<OverlayOne />)
   
-  useEffect(() => {
-    Socket.emit("new review", {review : "", productId: params.id})
-  }, [])
+  // useEffect(() => {
+    // Socket.emit("new review", {review : "", productId: params.id})
+  // }, [])
 
   useEffect(() => {
     dispatch(getSingleProduct(params.id))
@@ -61,11 +66,16 @@ const SingleProductPage = ({props}) => {
         console.log(res, 'RESPONSE FOR SINGLE PRODUCT GET')
         setData(res.prod)
       })
-      
-      Socket.on("new review", (d) => {
-        setReviews(d)
-        console.log("Server said: ", d)
-      })
+      // Socket.on("new review", (d) => {
+      //   setReviews(d)
+      //   console.log("Server said: ", d)
+      // })
+
+    dispatch(getReviewsAction(params.id))
+    .then((res) => {
+      console.log("RESPONSE FOR GET REVIEWS", res)
+      setReviews(res)
+    })
     }, [])
     
   const handleSubmitReview=(review, rating)=>{
@@ -74,11 +84,16 @@ const SingleProductPage = ({props}) => {
     if(localData != undefined){
       if(review != ""){
         console.log('TESTING SOCKET')
-        Socket.emit("new review", {
-          userId: localData._id,
-          productId: params.id,
-          review: review,
-          rating: rating
+        // Socket.emit("new review", {
+        //   userId: localData._id,
+        //   productId: params.id,
+        //   review: review,
+        //   rating: rating
+        // })
+        dispatch(postReviewAction({userId: localData._id, productId: params.id, review, rating}))
+        .then((res) => {
+          console.log('POST REVIEW ', res)
+          setReviews(res)
         })
         toast({
           title: "Review added",

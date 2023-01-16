@@ -27,9 +27,11 @@ export function AddReview({handleSubmitReview}) {
       console.log(rating, fillStar)
       onClose()
     }
+
+    // ! TODO
     useEffect(()=>{
 
-    },[fillStar])
+    },[])
         
     return (
       <>
