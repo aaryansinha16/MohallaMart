@@ -9,16 +9,21 @@ import { getOrderAction } from "../../redux/order/order.actions";
 
 export default function Orders() {
     const [ordersData, setOrdersData] = useState([]);
+    const [totalValue, setTotalValue] = useState(0)
     let dispatch = useDispatch()
     let toast = useToast()
+    const [loading, setLoading] = useState(false)
 
     useEffect(()=>{
         let localData = JSON.parse(localStorage.getItem("userData")) || undefined
         if(localData != undefined){
+            setLoading(true)
             dispatch(getOrderAction(localData._id))
             .then((res) => {
-                console.log('RESPONSE FOR GET ORDERS', res)
-                setOrdersData(res.items)
+                // console.log('RESPONSE FOR GET ORDERS', res)
+                setOrdersData(res.allItems)
+                setTotalValue(res.totalCost)
+                setLoading(false)
             })
         }else{
             toast({
@@ -41,12 +46,13 @@ export default function Orders() {
                     fontSize='32px'
                     fontFamily='mono'
                 >Total Order Value:</Text>
-                <Text fontSize='26px' fontWeight='medium'>{`${ordersData?.totalCost?.toFixed(2)}`}₹</Text>
+                <Text fontSize='26px' fontWeight='medium'>{`${totalValue?.toFixed(2)}`}₹</Text>
             </HStack>
-            <Stack spacing="6" w={{base:'100%',md:"60%"}} m="auto" mb='100px' borderRadius='100px 100px 100px 100px' bg='#00957b' px={{ base: '4', md: '8', lg: '12' }}
+            {loading && "LOADING"}
+            <Stack spacing="6" w={{base:'100%',md:'80%',lg:"60%"}} m="auto" mb='100px' borderRadius='100px 100px 100px 100px' bg='#00957b' px={{ base: '4', md: '8', lg: '12' }}
         py={{ base: '6', md: '8', lg: '12' }}>
               {
-                ordersData?.products?.map((item) => (
+                ordersData?.map((item) => (
                     <CartItem key={item._id} {...item} />
                 ))
               }

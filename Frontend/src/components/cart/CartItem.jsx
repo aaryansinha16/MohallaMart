@@ -44,12 +44,26 @@ export const CartItem = (props, {setProducts, products}) => {
 
      {/* Desktop */}
       <Flex width="full" justify="space-between" display={{ base: 'none', md: 'flex' }}>
-        <QuantitySelect
+        {/* <QuantitySelect
           value={productId?.quantity}
           onChange={(e) => {
             onChangeQuantity?.(+e.currentTarget.value)
           }}
-        />
+        /> */}
+        <Select
+          value={props.value}
+          maxW="64px"
+          aria-label="Select quantity"
+          bg='green.300'
+          color='white'
+          onChange={(e) => onChangeQuantity?.(e.currentTarget.value)}
+          // {...props}
+        >
+          <option value="1" style={{background:'orange', color:'white'}}>1</option>
+          <option value="2" style={{background:'orange', color:'white'}}>2</option>
+          <option value="3" style={{background:'orange', color:'white'}}>3</option>
+          <option value="4" style={{background:'orange', color:'white'}}>4</option>
+        </Select>
         <PriceTag price={productId.price} currency={"INR"} />
         <CloseButton aria-label={`Delete ${productId.title} from cart`} onClick={() => props.handleDelete(productId._id)} />
       </Flex>

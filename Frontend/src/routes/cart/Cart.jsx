@@ -66,6 +66,11 @@ function Cart() {
             price : res.items[i].productId.price
           })
           setProducts(arr)
+          if(totalCost == 0){
+            let total = 0
+            arr.map((el) => total += el.price * el.quantity)
+            setTotalCost(total)
+          }
         }
       })
     }

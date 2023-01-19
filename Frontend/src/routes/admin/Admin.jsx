@@ -75,7 +75,7 @@ const Admin = ({props}) => {
 
 
   return (
-    <Box className='dashboard'>
+    <Box className='home'>
       <DeskDash />
       <RespDash />
     </Box>

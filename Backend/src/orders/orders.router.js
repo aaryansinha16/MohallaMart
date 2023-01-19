@@ -7,12 +7,24 @@ const app = express.Router()
 //? GET all the ordred items of the particular user
 app.get("/", async(req, res) => {
     let {userId} = req.query
+    console.log("Trigger", userId)
     
     try{
-        let orderItems = await orderModel.findOne({userId}).populate('products.productId')
+        let orderItems = await orderModel.find({userId}).populate('products.productId')
+        let allItems = []
+        let totalCost = 0
+        orderItems.map((el) => {
+            totalCost += el.totalCost
+            allItems.push(el.products)
+            return
+        })
+        allItems = allItems.flat(1)
+        // console.log(allItems, 'ORDERITEMS')
         return res.send({
             message: "Orders fetch successfull",
-            items: orderItems
+            items: orderItems,
+            allItems,
+            totalCost
         })
     }catch(e){
         return res.status(500).send({

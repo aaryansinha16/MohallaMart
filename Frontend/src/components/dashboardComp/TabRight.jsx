@@ -11,6 +11,7 @@ const TabRight = ({tab}) => {
     let localData = JSON.parse(localStorage.getItem("userData")) || undefined
   return (
     <VStack
+        color='white'
         boxShadow='2xl'
         w={tab == 'menu'? '100%':'100%'}
         h='95vh' 

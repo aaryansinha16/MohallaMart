@@ -51,7 +51,7 @@ const DeskDash = () => {
                       fontSize={"lg"}
                       bg="transparent"
                       transition="0.2s ease-out"
-                      color='black'
+                      color='white'
                       _hover={{
                           background:  "orange",
                           opacity: "0.9",
@@ -71,7 +71,7 @@ const DeskDash = () => {
                         fontSize={"lg"}
                         bg="transparent"
                         transition="0.2s ease-out"
-                        color='black'
+                        color='white'
                         _hover={{
                         background:  "orange",
                         opacity: "0.9",
@@ -90,7 +90,7 @@ const DeskDash = () => {
                         fontSize={"lg"}
                         bg="transparent"
                         transition="0.2s ease-out"
-                        color='black'
+                        color='white'
                         _hover={{
                         background:  "orange",
                         opacity: "0.9",
@@ -109,7 +109,7 @@ const DeskDash = () => {
                       fontSize={"lg"}
                       bg="transparent"
                       transition="0.2s ease-out"
-                      color='black'
+                      color='white'
                       _hover={{
                          background:  "orange",
                          opacity: "0.9",
@@ -128,7 +128,7 @@ const DeskDash = () => {
                         fontSize={"lg"}
                         bg="transparent"
                         transition="0.2s ease-out"
-                        color='black'
+                        color='white'
                         _hover={{
                             background:  "orange",
                             opacity: "0.9",
@@ -157,11 +157,12 @@ const DeskDash = () => {
                         pt={2} 
                         w='100%' 
                         h='94vh'  
-                        bgColor='rgba(100, 100, 100, .10)' 
+                        bgColor='rgba(255, 255, 255, .20)' 
                         borderRadius='2xl' 
                         style={{backdropFilter: 'blur(5px)'}} 
                         boxShadow='lg' 
                         m='auto'
+                        color='white'
                         overflowY='scroll' >
                          <MainDash currData={currData} futureData={futureData} pollData={pollData}/>
                      </Box>

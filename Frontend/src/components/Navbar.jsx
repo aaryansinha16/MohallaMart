@@ -20,6 +20,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import { logoutAction } from "../redux/auth/auth.actions";
 import { store } from "../redux/store";
 import BecomeSeller from "./BecomeSellerModal";
+import Login from "../routes/Login";
 
 let localData = JSON.parse(localStorage.getItem("userData")) || undefined
 export default function Navbar(){
@@ -53,6 +54,12 @@ export default function Navbar(){
             onOpen()
             setOverlay(<OverlayOne/>)
         } 
+    }
+
+    const handleLogin = () => {
+        let localData = JSON.parse(localStorage.getItem("userData")) || undefined
+        onOpen()
+        setOverlay(<OverlayOne />)
     }
 
     const forceUpdate = () => setRender((prev) => prev + 1)
@@ -123,7 +130,12 @@ export default function Navbar(){
                 </Flex>
                 <MenuList color='black'>
                     <MenuGroup title='Profile'>
-                        <Link to='/admin'><MenuItem>My Account</MenuItem></Link>
+                        {
+                            localData != undefined ? 
+                            <Link to='/admin'><MenuItem>My Account</MenuItem></Link>
+                            :
+                            <MenuItem onClick={() => handleLogin()}>Login</MenuItem>
+                        }
                         <Link to='/wishlist'><MenuItem>Wishlist</MenuItem></Link>
                         <Link to='/cart'><MenuItem>Cart</MenuItem></Link>
                     </MenuGroup>
@@ -141,7 +153,12 @@ export default function Navbar(){
                 </MenuList>
             </Menu>
 
-            <BecomeSeller isOpen={isOpen} onClose={onClose} drMod={drMod} setDrMod={setDrMod} />
+            {
+                localData != undefined ?
+                <BecomeSeller isOpen={isOpen} onClose={onClose} drMod={drMod} setDrMod={setDrMod} />
+                :
+                <Login isOpen={isOpen} onClose={onClose} />
+            }
              
             <Button ref={btnRef} colorScheme='transparent' color="white" border="1px solid" onClick={() => {
                 setDrMod(false)
