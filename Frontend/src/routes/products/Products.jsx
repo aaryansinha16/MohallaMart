@@ -23,6 +23,7 @@ import { getProductsAction } from "../../redux/products/product.action";
 import { getWishlistAction, postWishlistAction } from "../../redux/wishlist/wishlist.actions";
 import { postCartAction } from "../../redux/cart/cart.actions";
 import {store} from '../../redux/store'
+import axios from "axios";
 
 export default function Products({props}={}) {
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -42,7 +43,6 @@ export default function Products({props}={}) {
     useEffect(() => {
         dispatch(getProductsAction())
         .then((res) => {
-            // console.log(res, 'RESPONSE ALL PRODUCTS PAGE')
             setAllProducts(res.prod)
             toast({
                 title: "Products Fetched",
@@ -60,14 +60,18 @@ export default function Products({props}={}) {
         if(localData != undefined){
             dispatch(getWishlistAction(localData._id))
             .then((res) => {
-                // console.log(res, 'RESPONSE GET WISHLIST')
                 setWishlist(res.items)
             })
             console.log('test2')
         }
     }, [render])
 
-    const handleSearch = (query) => {}
+    const handleSearch = async (query) => {
+        await axios.get(`https://helpful-tan-cricket.cyclic.app/products/search?title=${query}`)
+        .then((res) => {
+            setAllProducts(res.data)
+        })
+    }
 
 
     const handleFilter =(e)=>{}
@@ -84,19 +88,6 @@ export default function Products({props}={}) {
             color='white'
         >
             <Navbar/>
-            {/* <Flex justify='flex-start' w='80%' m='auto' fontSize='12px' mt='30px' color='white'>
-                    <Breadcrumb spacing='8px' separator={<ChevronRightIcon color='gray.500' />}>
-                        <BreadcrumbItem>
-                            <BreadcrumbLink href='/'>MohallaMart</BreadcrumbLink>
-                        </BreadcrumbItem>
-
-                        <BreadcrumbItem>
-                            <BreadcrumbLink href='/products'>Products</BreadcrumbLink>
-                        </BreadcrumbItem>
-                    </Breadcrumb>
-            </Flex> */}
-
-            {/* <Divider/> */}
 
             <Flex justify={{base:'space-between', lg:'flex-start'}} w='80%' m='auto' align='center' pt={2} pb={2} fontSize='14px'>
                 <HStack w={{base:'30%',lg:'20%'}} align='center'>
@@ -150,7 +141,7 @@ export default function Products({props}={}) {
                 bg='#00957b'
                 mt='40px'
               > 
-                <TopSec />
+                <TopSec handleSearch={handleSearch}/>
 
                 <Flex m='auto' mt='30px' mb='30px' w={{lg:'90%', xl:'80%'}} justify={{base:'center', lg:'space-between'}}  >
 

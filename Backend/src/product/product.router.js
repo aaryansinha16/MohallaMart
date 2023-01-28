@@ -100,5 +100,38 @@ app.patch("/update-price", async(req, res) => {
     }
 })
 
+// ? GET filtered products
+app.get("/filter", async(req, res) => {
+    let {pricefrom, priceto, ratingfrom, ratingto } = req.headers
+    try{
+        let data;
+        if(pricefrom && ratingfrom){
+            data = await productModel.find({price : {$gte : pricefrom, $lte : priceto} , ratings: { $gte: ratingfrom , $lte : ratingto } })
+            // console.log(pricefrom, priceto, ratingfrom, ratingto,data, 'FILTER')
+            return res.send({
+                message: "Fetched",
+                data: data
+            })
+        }
+        else if(pricefrom){
+            data = await productModel.find({price: {$gte : pricefrom, $lte : priceto}})
+            return res.send({
+                message: 'filtered', 
+                data: data
+            })
+        }else if(ratingfrom){
+            data = await productModel.find({ratings: { $gte: ratingfrom , $lte : ratingto }})
+            return res.send({
+                message: 'filtered', 
+                data: data
+            })
+        }
+    }catch(e){
+        return res.status(500).send({
+            message: e.message
+        })
+    }
+})
+
 
 module.exports = app
