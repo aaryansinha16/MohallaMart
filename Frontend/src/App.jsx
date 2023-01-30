@@ -6,12 +6,14 @@ import AllRoutes from './routes/AllRoutes'
 
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
 function App() {
 
   const { colorMode, toggleColorMode } = useColorMode()
   const bg = useColorModeValue('#f0f1f7', 'green')
-  console.log(colorMode)
+
+  useSelector((store) => console.log("STORE:",store))
 
 
   const cursorX = useMotionValue(-100);

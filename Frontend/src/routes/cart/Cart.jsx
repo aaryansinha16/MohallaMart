@@ -120,7 +120,8 @@ function Cart() {
     }
 
     // Make API call to the serverless API
-    const data = await axios.post("https://helpful-tan-cricket.cyclic.app/razorpay", {name,email,contact,amount})
+    const data = await axios.post("https://helpful-tan-cricket.cyclic.app/razorpay", {name,email,contact,amount : amount.toFixed(2)})
+    console.log(data,"Data" )
     var options = {
       key: 'rzp_test_hQsLO3wTpgFfia', // Enter the Key ID generated from the Dashboard
       name: "Mohalla Mart Pvt Ltd",
@@ -146,18 +147,19 @@ function Cart() {
       dispatch(postOrderAction(localData._id,totalCost, products, response.razorpay_order_id))
       .then((res) => {
         console.log(res, 'POST ORDER')
+        navigate('/orders')
       })
-      },
-      prefill: {
-        name: {name},
-        email: {email},
-        contact: {contact},
-      },
-    };
-
-    const paymentObject = new window.Razorpay(options);
-    paymentObject.open();
-    navigate('/orders')
+    },
+    prefill: {
+      name: {name},
+      email: {email},
+      contact: {contact},
+    },
+  };
+  
+  const paymentObject = new window.Razorpay(options);
+  paymentObject.open();
+  console.log("3",res, '3')
   };
   
   const initializeRazorpay = () => {

@@ -5,7 +5,8 @@ export const getProductsAction = () => async(dispatch) => {
     dispatch({type: PRODUCT_LOADING})
     try{
         let data = await axios('https://helpful-tan-cricket.cyclic.app/products')
-        dispatch({type: PRODUCT_SUCCESS, payload: data.data})
+        dispatch({type: PRODUCT_SUCCESS, payload: data.data.prod})
+        console.log("PRODUCTS:", data.data.prod)
         return data.data
     }catch(e){
         dispatch({type: PRODUCT_ERROR, payload: e.response.message})
@@ -23,5 +24,16 @@ export const getSingleProduct = (prodId) => async (dispatch) => {
     }
     catch(e){
         dispatch({type: PRODUCT_ERROR, payload: e.response.message})
+    }
+}
+
+export const postProduct = (prodDetail) => async (dispatch) => {
+    dispatch({type: PRODUCT_LOADING})
+    try{
+        let data = await axios.post(`https://helpful-tan-cricket.cyclic.app/products/create-product`, prodDetail)
+        dispatch({type: PRODUCT_SUCCESS, payload : data.data})
+        return data.data
+    }catch(e){
+        dispatch({type : PRODUCT_ERROR})
     }
 }

@@ -1,25 +1,55 @@
-import { Tab, TabList, TabPanel, TabPanels, Tabs, VStack, Box, Heading, Text, useToast, Button, HStack, Divider, Flex, Badge, Image } from '@chakra-ui/react'
+import { Tab, TabList, TabPanel, TabPanels, Tabs, VStack, Box, Heading, Text, useToast, Button, HStack, Divider, Flex, Badge, Image, FormLabel, Input } from '@chakra-ui/react'
 import React, {useState, useEffect, memo} from 'react'
-import { AiOutlineHome, AiOutlineTeam } from 'react-icons/ai'
-import { BiBarChartSquare, BiTimeFive } from 'react-icons/bi'
-import { CgBriefcase } from 'react-icons/cg'
-import { HiOutlineIdentification, HiOutlineLocationMarker } from 'react-icons/hi'
-import { FiPieChart } from 'react-icons/fi'
+import { AiOutlineHome } from 'react-icons/ai'
+import { BiBarChartSquare } from 'react-icons/bi'
+import { HiOutlineLocationMarker } from 'react-icons/hi'
 import MainDash from './mainDash/MainDash'
-import {BsCalendarDate, BsFillSunFill} from 'react-icons/bs'
+import {BsCalendarDate} from 'react-icons/bs'
 import {MdOutlineSettings} from 'react-icons/md'
-import { TiWeatherCloudy } from 'react-icons/ti'
-import { CalendarIcon } from '@chakra-ui/icons'
 import TabRight from './TabRight'
-// import {currentData, initialGet, pollutionData} from '../api/requests'
-// import ConstructionImg from '../assets/underCons.jpg'
+import { useDispatch } from 'react-redux'
+import { postProduct } from '../../redux/products/product.action'
 
+
+let localData = JSON.parse(localStorage.getItem("userData")) || undefined
 const DeskDash = () => {
+   let localData = JSON.parse(localStorage.getItem("userData")) || undefined
    console.log("Dashboard render test")
+   const toast = useToast()
+   const dispatch = useDispatch()
 
    const [currData, setCurrData] = useState([])
    const [futureData ,setFutureData] = useState([])
    const [pollData, setPollData] = useState([])
+
+   const [prodDetail, setProdDetail] = useState({
+      userId : localData?._id
+   })
+
+   function onChange(e){
+      let {name, value } = e.target
+
+      setProdDetail({
+         ...prodDetail,
+         [name] : value
+      })
+   }
+
+   const handleCreateProduct = () => {
+      if(localData == undefined || localData.role == "Buyer"){
+         return 
+      }
+      // console.log(prodDetail)
+      dispatch(postProduct(prodDetail))
+      .then((res) => {
+         toast({
+            title : "Product Created Successfully",
+            isClosable : true,
+            duration : 6000,
+            status : 'info'
+         })
+      })
+   }
 
    return (
       <HStack gap={0} spacing={0} justifyContent='center' pr={4} display={{base:'none', md:'flex'}}>
@@ -106,6 +136,7 @@ const DeskDash = () => {
                    </Tab>
  
                    <Tab
+                      isDisabled={localData == undefined || localData.role == "Buyer"}
                       fontSize={"lg"}
                       bg="transparent"
                       transition="0.2s ease-out"
@@ -198,15 +229,46 @@ const DeskDash = () => {
  
                 //* FOR ALL PRODUCTS
                 <TabPanel>
-                   <Box w='100%' p={6} h='90vh' bgColor='rgba(255, 255, 255, .20)' borderRadius='2xl' style={{backdropFilter: 'blur(5px)'}} boxShadow='lg' m='auto' >
-                         <Heading pt='40px' textAlign='center'>Under Construction</Heading>
-                        {/* <Image
-                           boxSize='100%'
-                           mt='100px'
-                           fit='cover'
-                           src={ConstructionImg}
-                        /> */}
-                         <Text fontSize='4xl' color='white'>Products</Text>
+                   <Box color='white' w='100%' p={6} h='90vh' bgColor='rgba(255, 255, 255, .20)' borderRadius='2xl' style={{backdropFilter: 'blur(5px)'}} boxShadow='lg' m='auto' >
+                         <Heading pt='40px' textAlign='center'>Create Products</Heading>
+                         <VStack
+                           w='75%'
+                           p={6}
+                           bg='rgba(255, 255, 255, .15)'
+                           m='auto'
+                           mt='50px'
+                           alignItems='flex-start'
+                           spacing={6}
+                           borderRadius='3xl'
+                         >
+                           <VStack spacing='-2' alignItems='flex-start' w='100%'>
+                              <FormLabel>Product Name:</FormLabel>
+                              <Input name='title' onChange={(e) => onChange(e)} color='black' outline='none' focusBorderColor='transparent' size='lg' bg='yellow.300' w='100%'/>
+                           </VStack>
+
+                           <Flex
+                              w='100%'
+                              justifyContent='center'
+                              gap={5}
+                              alignItems='center'
+                           >
+                              <VStack spacing='-2' alignItems='flex-start' w='100%'>
+                                 <FormLabel>Set Price:</FormLabel>
+                                 <Input name='price' color='black' onChange={(e) => onChange(e)} outline='none' focusBorderColor='transparent' size='lg' bg='yellow.300' w='100%' type='number' />
+                              </VStack>
+                              <VStack spacing='-2' alignItems='flex-start' w='100%'>
+                                 <FormLabel>Set Quantity:</FormLabel>
+                                 <Input name='quantity' color='black' onChange={(e) => onChange(e)} outline='none' focusBorderColor='transparent' size='lg' bg='yellow.300' w='100%' type='number' />
+                              </VStack>
+                           </Flex>
+
+                           <VStack spacing='-2' alignItems='flex-start' w='100%'>
+                              <FormLabel>Product Image:</FormLabel>
+                              <Input name='image' color='black' onChange={(e) => onChange(e)} outline='none' focusBorderColor='transparent' size='lg' bg='yellow.300' w='100%' type='url' />
+                           </VStack>
+
+                           <Button colorScheme='yellow' color='white' onClick={handleCreateProduct}>Create Product</Button>
+                         </VStack>
                    </Box>
                 </TabPanel>
  

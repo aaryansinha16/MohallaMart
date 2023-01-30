@@ -14,7 +14,7 @@ export default function MidSec({data,wishlist, page, setPage, setRender, currPag
             <Grid gridTemplateColumns={{base:'repeat(1, 1fr)', md:'repeat(2,1fr)', xl:'repeat(3,1fr)'}} placeItems='center' gap={4} 
             >
                 {
-                    data?.slice(0,15).map((item) => {
+                    data?.map((item) => {
                         if(currPage != 'wishlist'){
                             let wish = wishlist?.filter((el) => item._id == el.productId._id)
                             // console.log(wish,'filter')
